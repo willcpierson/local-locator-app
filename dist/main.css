@@ -1,0 +1,180 @@
+/*!*************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
+  \*************************************************************************************************************************************/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  background-color: #5284cf;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #5284cf;
+}
+
+#linkedin {
+  padding-top: 10px;
+  height: 65px;
+  width: 65px;
+}
+
+nav ul li {
+  list-style-type: none;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #17C3B2;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  font-family: "Michroma", sans-serif;
+  background-color: rgb(49, 49, 49);
+  border-radius: 10px;
+  color: white;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+ol li {
+  list-style-type: none;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #71A9F7;
+  border: 2px solid rgb(49, 49, 49);
+  border-radius: 10px;
+  animation: transitionIn 1s;
+  text-decoration: none;
+}
+
+ol li:hover {
+  background-color: #3c7fdd;
+  cursor: pointer;
+}
+
+ol li a {
+  text-decoration: none;
+  color: black;
+}
+
+a:visited {
+  text-decoration: none;
+  color: black;
+}
+
+article {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+div {
+  border: 2px groove blueviolet;
+  background-color: rgb(49, 49, 49);
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+aside {
+  border: 5px solid rgb(49, 49, 49);
+  display: inline-block;
+  background-color: #3976bc;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.select-form {
+  margin: 5px;
+  width: 200px;
+  height: 40px;
+  border: #3976bc;
+  border-radius: 10px;
+  text-align: center;
+}
+
+aside input {
+  margin: 5px;
+  width: 200px;
+  height: 40px;
+  border: #3976bc;
+  border-radius: 10px;
+  text-align: center;
+}
+
+aside h3 {
+  text-align: center;
+}
+
+aside button {
+  border: 2px solid rgb(49, 49, 49);
+  margin: 1px;
+  margin-top: 14px;
+  margin-left: 30px;
+  height: 30px;
+  padding: 5px;
+  width: 150px;
+  overflow: visible;
+  border-radius: 10px;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+}
+
+aside button:hover {
+  background-color: rgb(49, 49, 49);
+  color: white;
+  cursor: pointer;
+}
+
+footer {
+  border: 4px solid rgb(49, 49, 49);
+  background-color: white;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+footer button {
+  border: 2px solid rgb(49, 49, 49);
+  margin: 5px;
+  padding: 3px;
+  width: auto;
+  overflow: visible;
+  border-radius: 10px;
+  background: transparent;
+}
+
+footer button:hover {
+  cursor: pointer;
+  background-color: rgb(199, 199, 199);
+}
+
+li {
+  border: 2px solid rgb(49, 49, 49);
+  width: 100%;
+}
+
+#tourney-list {
+  border: 4px solid rgb(49, 49, 49);
+  height: 300px;
+  width: 700px;
+  display: inline-block;
+  overflow-x: hidden;
+}
+
+@keyframes transitionIn {
+  from {
+    opacity: 0;
+    transform: translateX(200px);
+  }
+  to {
+    opacity: 1;
+    transform: rotateX(0);
+  }
+}

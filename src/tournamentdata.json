@@ -1,0 +1,372 @@
+{
+    "nodes" : [ 
+    {
+        "slug": "tournament/syracuse-smash-rgc-2022",
+          "id": 1,
+          "name": "Syracuse Smash @ RGC 2022",
+          "city": "Syracuse",
+          "addrState": "NY",
+          "events": {
+            "Super Smash Bros. Melee" : {
+                "attendeeList" : [
+                    "Jflex",
+                    "Bbatts",
+                    "Ryobeat",
+                    "JoJo",
+                    "Jmook",
+                    "Willy P",
+                    "Fahey",
+                    "Drew6",
+                    "forsaken",
+                    "Zann",
+                    "Forte",
+                    "Siddward",
+                    "Mot$",
+                    "Vino",
+                    "Jib"
+                ]
+            }
+          }
+    }, 
+        {
+            "slug": "tournament/pk-fire-10",
+            "id": 2,
+            "name": "PK Fire 10",
+            "city": "Poughkeepsie",
+            "addrState": "NY",
+            "events": {
+                "Super Smash Bros. Melee": {
+                    "attendeeList" : [
+                        "Jflex",
+                        "Bbatts",
+                        "Ryobeat",
+                        "JoJo",
+                        "Jmook",
+                        "Willy P",
+                        "Fahey",
+                        "Drew6",
+                        "forsaken",
+                        "Zann",
+                        "Forte",
+                        "Siddward",
+                        "Mot$",
+                        "Vino",
+                        "Jib"
+                    ]
+                },
+                "Super Smash Bros. Ultimate": {
+                    "attendeeList" : [
+                        "MKLeo",
+                        "Tweek",
+                        "Sparg0",
+                        "Hungrybox",
+                        "Light",
+                        "Wizzrobe",
+                        "Maister",
+                        "FlimFlam",
+                        "Boople",
+                        "Sham",
+                        "John",
+                        "BuckleBeeBlap"
+                    ]
+                }
+            }
+    },
+        {
+        "slug": "tournament/the-honeycomb-iv",
+          "id": 3,
+          "name": "The Honeycomb IV",
+          "city": "Rochester",
+          "addrState": "NY",
+          "events": {
+            "Super Smash Bros. Melee": {
+                "attendeeList" : [
+                    "Jflex",
+                    "Bbatts",
+                    "Ryobeat",
+                    "JoJo",
+                    "Jmook",
+                    "Willy P",
+                    "Fahey",
+                    "Drew6",
+                    "forsaken",
+                    "Zann",
+                    "Forte",
+                    "Siddward",
+                    "Mot$",
+                    "Vino",
+                    "Jib"
+                ]
+            },
+            "Ultimate": {
+                "attendeeList" : [
+                    "MKLeo",
+                    "Tweek",
+                    "Sparg0",
+                    "Hungrybox",
+                    "Light",
+                    "Wizzrobe",
+                    "Maister",
+                    "FlimFlam",
+                    "Boople",
+                    "Sham",
+                    "John",
+                    "BuckleBeeBlap"
+                ]
+            }
+        }
+    },
+        {
+            "slug": "tournament/nyu-melee-torch-fest-3-with-amateur-bracket",
+          "id": 4,
+          "name": "NYU Melee Torch Fest #3 (WITH AMATEUR BRACKET)",
+          "city": "Brooklyn",
+          "addrState": "NY",
+          "events": {
+            "Super Smash Bros. Melee": {
+                "attendeeList" : [
+                    "Jflex",
+                    "Bbatts",
+                    "Ryobeat",
+                    "JoJo",
+                    "Jmook",
+                    "Willy P",
+                    "Fahey",
+                    "Drew6",
+                    "forsaken",
+                    "Zann",
+                    "Forte",
+                    "Siddward",
+                    "Mot$",
+                    "Vino",
+                    "Jib"
+                ]
+            }
+        }
+        },
+    {
+        "slug": "tournament/the-nightclub-s4e10-os-nyc",
+          "id": 5,
+          "name": "The Nightclub S4E10 @ OS NYC",
+          "city": "New York",
+          "addrState": "NY",
+          "events": {
+            "Super Smash Bros. Melee": {
+                "attendeeList" : [
+                    "Jflex",
+                    "Bbatts",
+                    "Ryobeat",
+                    "JoJo",
+                    "Jmook",
+                    "Willy P",
+                    "Fahey",
+                    "Drew6",
+                    "forsaken",
+                    "Zann",
+                    "Forte",
+                    "Siddward",
+                    "Mot$",
+                    "Vino",
+                    "Jib"
+                ]
+            }
+        }
+    },
+    {
+        "slug": "tournament/nyu-melee-torch-fest-3-with-amateur-bracket",
+      "id": 6,
+      "name": "NYU Melee Torch Fest #3 (WITH AMATEUR BRACKET)",
+      "city": "Brooklyn",
+      "addrState": "NY",
+      "events": {
+        "Super Smash Bros. Melee": {
+            "attendeeList" : [
+                "Jflex",
+                "Bbatts",
+                "Ryobeat",
+                "JoJo",
+                "Jmook",
+                "Willy P",
+                "Fahey",
+                "Drew6",
+                "forsaken",
+                "Zann",
+                "Forte",
+                "Siddward",
+                "Mot$",
+                "Vino",
+                "Jib"
+            ]
+        }
+    }
+    },{
+        "slug": "tournament/nyu-melee-torch-fest-3-with-amateur-bracket",
+      "id": 7,
+      "name": "The Function 2",
+      "city": "Brooklyn",
+      "addrState": "NY",
+      "events": {
+        "Super Smash Bros. Melee": {
+            "attendeeList" : [
+                "Jflex",
+                "Bbatts",
+                "Ryobeat",
+                "JoJo",
+                "Jmook",
+                "Willy P",
+                "Fahey",
+                "Drew6",
+                "forsaken",
+                "Zann",
+                "Forte",
+                "Siddward",
+                "Mot$",
+                "Vino",
+                "Jib"
+            ]
+        }
+    }
+    },
+    {
+        "slug": "tournament/nyu-melee-torch-fest-3-with-amateur-bracket",
+      "id": 8,
+      "name": "Another NYC Tournament??? #136",
+      "city": "New York",
+      "addrState": "NY",
+      "events": {
+        "Super Smash Bros. Melee": {
+            "attendeeList" : [
+                "Jflex",
+                "Bbatts",
+                "Ryobeat",
+                "JoJo",
+                "Jmook",
+                "Willy P",
+                "Fahey",
+                "Drew6",
+                "forsaken",
+                "Zann",
+                "Forte",
+                "Siddward",
+                "Mot$",
+                "Vino",
+                "Jib"
+            ]
+        }
+    }
+    },
+    {
+        "slug": "tournament/nyu-melee-torch-fest-3-with-amateur-bracket",
+      "id": 9,
+      "name": "Smash The Spire #13",
+      "city": "Bronx",
+      "addrState": "NY",
+      "events": {
+        "Super Smash Bros. Melee": {
+            "attendeeList" : [
+                "Jflex",
+                "Bbatts",
+                "Ryobeat",
+                "JoJo",
+                "Jmook",
+                "Willy P",
+                "Fahey",
+                "Drew6",
+                "forsaken",
+                "Zann",
+                "Forte",
+                "Siddward",
+                "Mot$",
+                "Vino",
+                "Jib"
+            ]
+        }
+    }
+    },
+    {
+        "slug": "tournament/apex-2022/details",
+      "id": 10,
+      "name": "Apex 2022",
+      "city": "Secaucus",
+      "addrState": "NJ",
+      "events": {
+        "Super Smash Bros. Melee": {
+            "attendeeList" : [
+                "Mango",
+                "Hungrybox",
+                "Zain",
+                "iBDW",
+                "Zuppy",
+                "Amsa",
+                "Leffen",
+                "a horse who can drive",
+                "Jflex",
+                "Bbatts",
+                "Ryobeat",
+                "JoJo",
+                "Jmook",
+                "Willy P",
+                "Fahey",
+                "Drew6",
+                "forsaken",
+                "Zann",
+                "Forte",
+                "Siddward",
+                "Mot$",
+                "Vino",
+                "Jib"
+            ]
+        },
+        "Super Smash Bros. Ultimate" : {
+            "attendeeList" : [
+                "MKLeo",
+                "Tweek",
+                "Sparg0",
+                "Hungrybox",
+                "Light",
+                "Wizzrobe",
+                "Maister",
+                "FlimFlam",
+                "Boople",
+                "Sham",
+                "John",
+                "BuckleBeeBlap"
+            ]
+        }
+    }
+    },
+    {
+        "slug": "tournament/nyu-melee-torch-fest-3-with-amateur-bracket",
+      "id": 11,
+      "name": " Stage Select #84",
+      "city": "Jersey City",
+      "addrState": "NJ",
+      "events": {
+        "Super Smash Bros. Melee": {
+            "attendeeList" : [
+                "Jflex",
+                "Bbatts",
+                "Ryobeat",
+                "JoJo",
+                "Jmook",
+                "Willy P",
+                "Fahey",
+                "Drew6",
+                "forsaken",
+                "Zann",
+                "Forte",
+                "Siddward",
+                "Mot$",
+                "Vino",
+                "Jib"
+            ]
+        }
+    }
+    } ]
+}
+
+
+
+ 
+          
+            
