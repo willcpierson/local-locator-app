@@ -109,8 +109,21 @@ aside input {
     text-align: center;
 }
 
+.checkbox-form {
+    width: 20px;
+}
+
+// label {
+    
+// }
+
 aside h3 {
     text-align: center;
+}
+
+aside h5 {
+    text-align: center;
+    margin-top: 10px;
 }
 
 aside button {
@@ -169,11 +182,7 @@ li {
     overflow-x:hidden
   }
 
-// .main-screen {
-//     display: flex;
-//     justify-content: space-between;
-//     flex-direction: row;
-// }
+
 
 @keyframes transitionIn {
     from {

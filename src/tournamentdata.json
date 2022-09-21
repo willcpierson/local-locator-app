@@ -6,6 +6,7 @@
           "name": "Syracuse Smash @ RGC 2022",
           "city": "Syracuse",
           "addrState": "NY",
+          "reoccurence": "weekly",
           "events": {
             "Super Smash Bros. Melee" : {
                 "attendeeList" : [
@@ -23,8 +24,40 @@
                     "Siddward",
                     "Mot$",
                     "Vino",
-                    "Jib"
-                ]
+                    "Jib",
+                    "Moky",
+                    "Polish",
+                    "Swedish Delight",
+                    "Tommy",
+                    "BuckleBeeBlap",
+                    "Lord of Runescape",
+                    "Player 1337",
+                    "Thomas",
+                    "Jimmy Jams",
+                    "Alto",
+                    "Soprano",
+                    "Stark",
+                    "Skywalker",
+                    "App Academy Assassin",
+                    "Baelish",
+                    "Subway: Eat Fresh",
+                    "Username Blank",
+                    "Sicko Mode",
+                    "Endeavor",
+                    "Solo",
+                    "Picard",
+                    "Parker",
+                    "Hornet",
+                    "BumbleBee",
+                    "$$$$",
+                    "Timebones",
+                    "SlipnSlide"
+                ],
+                "pastAttendeeCount" : {
+                    "pastOne" : 17,
+                    "pastTwo" : 29,
+                    "pastThree" : 21
+                }
             }
           }
     }, 
@@ -34,6 +67,7 @@
             "name": "PK Fire 10",
             "city": "Poughkeepsie",
             "addrState": "NY",
+            "reoccurence": "biweekly",
             "events": {
                 "Super Smash Bros. Melee": {
                     "attendeeList" : [
@@ -51,8 +85,39 @@
                         "Siddward",
                         "Mot$",
                         "Vino",
-                        "Jib"
-                    ]
+                        "Jib",
+                        "Moky",
+                        "Polish",
+                        "Swedish Delight",
+                        "Tommy",
+                        "BuckleBeeBlap",
+                        "Lord of Runescape",
+                        "Player 1337",
+                        "Thomas",
+                        "Jimmy Jams",
+                        "Alto",
+                        "App Academy Assassin",
+                        "Baelish",
+                        "Subway: Eat Fresh",
+                        "Username Blank",
+                        "Sicko Mode",
+                        "Endeavor",
+                        "Solo",
+                        "Picard",
+                        "$$$$",
+                        "Timebones",
+                        "SlipnSlide",
+                        "Prometheus",
+                        "HiFi",
+                        "Isles",
+                        "Duk",
+                        "AliceClimbers"
+                    ],
+                    "pastAttendeeCount" : {
+                        "pastOne" : 9,
+                        "pastTwo" : 21,
+                        "pastThree" : 15
+                    }
                 },
                 "Super Smash Bros. Ultimate": {
                     "attendeeList" : [
@@ -67,8 +132,45 @@
                         "Boople",
                         "Sham",
                         "John",
-                        "BuckleBeeBlap"
-                    ]
+                        "BuckleBeeBlap",
+                        "Moky",
+                        "Polish",
+                        "Swedish Delight",
+                        "Tommy",
+                        "BuckleBeeBlap",
+                        "Lord of Runescape",
+                        "Player 1337",
+                        "Thomas",
+                        "Jimmy Jams",
+                        "Alto",
+                        "Soprano",
+                        "Stark",
+                        "Skywalker",
+                        "App Academy Assassin",
+                        "Baelish",
+                        "Subway: Eat Fresh",
+                        "Username Blank",
+                        "Sicko Mode",
+                        "Endeavor",
+                        "Solo",
+                        "Picard",
+                        "Parker",
+                        "Hornet",
+                        "BumbleBee",
+                        "$$$$",
+                        "Timebones",
+                        "SlipnSlide",
+                        "Prometheus",
+                        "HiFi",
+                        "Isles",
+                        "Duk",
+                        "AliceClimbers"
+                    ],
+                    "pastAttendeeCount" : {
+                        "pastOne" : 21,
+                        "pastTwo" : 17,
+                        "pastThree" : 23
+                    }
                 }
             }
     },
@@ -78,6 +180,7 @@
           "name": "The Honeycomb IV",
           "city": "Rochester",
           "addrState": "NY",
+          "reoccurence": "biweekly",
           "events": {
             "Super Smash Bros. Melee": {
                 "attendeeList" : [
@@ -96,7 +199,12 @@
                     "Mot$",
                     "Vino",
                     "Jib"
-                ]
+                ],
+                "pastAttendeeCount" : {
+                    "pastOne" : 7,
+                    "pastTwo" : 14,
+                    "pastThree" : 8
+                }
             },
             "Ultimate": {
                 "attendeeList" : [
@@ -112,7 +220,12 @@
                     "Sham",
                     "John",
                     "BuckleBeeBlap"
-                ]
+                ],
+                "pastAttendeeCount" : {
+                    "pastOne" : 21,
+                    "pastTwo" : 17,
+                    "pastThree" : 24
+                }
             }
         }
     },
@@ -122,6 +235,7 @@
           "name": "NYU Melee Torch Fest #3 (WITH AMATEUR BRACKET)",
           "city": "Brooklyn",
           "addrState": "NY",
+          "reoccurence": "biweekly",
           "events": {
             "Super Smash Bros. Melee": {
                 "attendeeList" : [
@@ -139,8 +253,17 @@
                     "Siddward",
                     "Mot$",
                     "Vino",
-                    "Jib"
-                ]
+                    "Jib",
+                    "Tommy",
+                    "BuckleBeeBlap",
+                    "Lord of Runescape",
+                    "Player 1337"
+                ],
+                "pastAttendeeCount" : {
+                    "pastOne" : 19,
+                    "pastTwo" : 24,
+                    "pastThree" : 20
+                }
             }
         }
         },
@@ -150,6 +273,7 @@
           "name": "The Nightclub S4E10 @ OS NYC",
           "city": "New York",
           "addrState": "NY",
+          "reoccurence": "weekly",
           "events": {
             "Super Smash Bros. Melee": {
                 "attendeeList" : [
@@ -167,44 +291,67 @@
                     "Siddward",
                     "Mot$",
                     "Vino",
-                    "Jib"
-                ]
+                    "Jib",
+                    "Void",
+                    "Danny Phantom",
+                    "Moky",
+                    "Polish",
+                    "Swedish Delight",
+                    "Tommy",
+                    "BuckleBeeBlap",
+                    "Lord of Runescape",
+                    "Player 1337",
+                    "Thomas",
+                    "Jimmy Jams",
+                    "Alto",
+                    "Soprano",
+                    "Stark",
+                    "Skywalker",
+                    "App Academy Assassin",
+                    "Baelish",
+                    "Subway: Eat Fresh",
+                    "Username Blank",
+                    "Sicko Mode",
+                    "Endeavor",
+                    "Solo",
+                    "Picard",
+                    "Parker",
+                    "Hornet",
+                    "BumbleBee",
+                    "$$$$",
+                    "Timebones",
+                    "SlipnSlide",
+                    "Prometheus",
+                    "HiFi",
+                    "Isles",
+                    "Duk",
+                    "AliceClimbers",
+                    "deft",
+                    "Wally",
+                    "Yahooz",
+                    "Swiftbass",
+                    "Cmac",
+                    "Jessica Jones",
+                    "cowboy",
+                    "altered",
+                    "Jamrun"
+                    
+                ],
+                "pastAttendeeCount" : {
+                    "pastOne" : 72,
+                    "pastTwo" : 96,
+                    "pastThree" : 81
+                }
             }
         }
-    },
+        },
     {
-        "slug": "tournament/nyu-melee-torch-fest-3-with-amateur-bracket",
-      "id": 6,
-      "name": "NYU Melee Torch Fest #3 (WITH AMATEUR BRACKET)",
-      "city": "Brooklyn",
-      "addrState": "NY",
-      "events": {
-        "Super Smash Bros. Melee": {
-            "attendeeList" : [
-                "Jflex",
-                "Bbatts",
-                "Ryobeat",
-                "JoJo",
-                "Jmook",
-                "Willy P",
-                "Fahey",
-                "Drew6",
-                "forsaken",
-                "Zann",
-                "Forte",
-                "Siddward",
-                "Mot$",
-                "Vino",
-                "Jib"
-            ]
-        }
-    }
-    },{
         "slug": "tournament/nyu-melee-torch-fest-3-with-amateur-bracket",
       "id": 7,
       "name": "The Function 2",
       "city": "Brooklyn",
       "addrState": "NY",
+      "reoccurence": "major",
       "events": {
         "Super Smash Bros. Melee": {
             "attendeeList" : [
@@ -222,7 +369,25 @@
                 "Siddward",
                 "Mot$",
                 "Vino",
-                "Jib"
+                "Jib",
+                "Moburu",
+                "unga bunga",
+                "semi-colon",
+                "Hercules",
+                "DarkGenex",
+                "Aklo",
+                "a horse who can drive",
+                "Void",
+                "Danny Phantom",
+                "Moky",
+                "Polish",
+                "Swedish Delight",
+                "Tommy",
+                "BuckleBeeBlap",
+                "Luu",
+                "Spareparts",
+                "Mars",
+                "Daniel"
             ]
         }
     }
@@ -233,6 +398,7 @@
       "name": "Another NYC Tournament??? #136",
       "city": "New York",
       "addrState": "NY",
+      "reoccurence": "weekly",
       "events": {
         "Super Smash Bros. Melee": {
             "attendeeList" : [
@@ -250,8 +416,25 @@
                 "Siddward",
                 "Mot$",
                 "Vino",
-                "Jib"
-            ]
+                "Jib",
+                "Solo",
+                "Picard",
+                "Parker",
+                "Hornet",
+                "BumbleBee",
+                "$$$$",
+                "Timebones",
+                "SlipnSlide",
+                "Prometheus",
+                "HiFi",
+                "Isles",
+                "Duk"
+            ],
+            "pastAttendeeCount" : {
+                "pastOne" : 9,
+                "pastTwo" : 13,
+                "pastThree" : 11
+            }
         }
     }
     },
@@ -261,6 +444,7 @@
       "name": "Smash The Spire #13",
       "city": "Bronx",
       "addrState": "NY",
+      "reoccurence": "biweekly",
       "events": {
         "Super Smash Bros. Melee": {
             "attendeeList" : [
@@ -278,8 +462,15 @@
                 "Siddward",
                 "Mot$",
                 "Vino",
-                "Jib"
-            ]
+                "Jib",
+                "Isles",
+                "Duk"
+            ],
+            "pastAttendeeCount" : {
+                "pastOne" : 15,
+                "pastTwo" : 15,
+                "pastThree" : 16
+            }
         }
     }
     },
@@ -289,6 +480,7 @@
       "name": "Apex 2022",
       "city": "Secaucus",
       "addrState": "NJ",
+      "reoccurence": "major",
       "events": {
         "Super Smash Bros. Melee": {
             "attendeeList" : [
@@ -314,7 +506,39 @@
                 "Siddward",
                 "Mot$",
                 "Vino",
-                "Jib"
+                "Jib",
+                "Moky",
+                "Polish",
+                "Swedish Delight",
+                "Tommy",
+                "BuckleBeeBlap",
+                "Lord of Runescape",
+                "Player 1337",
+                "Thomas",
+                "Jimmy Jams",
+                "Alto",
+                "Soprano",
+                "Stark",
+                "Skywalker",
+                "App Academy Assassin",
+                "Baelish",
+                "Subway: Eat Fresh",
+                "Username Blank",
+                "Sicko Mode",
+                "Endeavor",
+                "Solo",
+                "Picard",
+                "Parker",
+                "Hornet",
+                "BumbleBee",
+                "$$$$",
+                "Timebones",
+                "SlipnSlide",
+                "Prometheus",
+                "HiFi",
+                "Isles",
+                "Duk",
+                "AliceClimbers"
             ]
         },
         "Super Smash Bros. Ultimate" : {
@@ -341,6 +565,7 @@
       "name": " Stage Select #84",
       "city": "Jersey City",
       "addrState": "NJ",
+      "reoccurence": "weekly",
       "events": {
         "Super Smash Bros. Melee": {
             "attendeeList" : [
@@ -358,8 +583,20 @@
                 "Siddward",
                 "Mot$",
                 "Vino",
-                "Jib"
-            ]
+                "Jib",
+                "Yahooz",
+                "Swiftbass",
+                "Cmac",
+                "Jessica Jones",
+                "cowboy",
+                "altered",                    
+                "Jamrun"
+            ],
+            "pastAttendeeCount" : {
+                "pastOne" : 29,
+                "pastTwo" : 31,
+                "pastThree" : 21
+            }
         }
     }
     } ]

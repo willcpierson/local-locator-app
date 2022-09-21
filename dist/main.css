@@ -108,8 +108,17 @@ aside input {
   text-align: center;
 }
 
+.checkbox-form {
+  width: 20px;
+}
+
 aside h3 {
   text-align: center;
+}
+
+aside h5 {
+  text-align: center;
+  margin-top: 10px;
 }
 
 aside button {

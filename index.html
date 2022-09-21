@@ -20,26 +20,29 @@
     <nav>
         <h1>Local Locator</h1>
         <ul class="nav-links">
-            <!-- <li><a href="HELP">LinkedIn</a></li>
-            <li><a href="HELP">Github</a></li> -->
             <a href="https://www.linkedin.com/in/will-pierson-63a86318a/">
                 <img id="linkedin" src="C:\Users\willp\Pictures\Local Locator Images\linkedIn.png" alt="linkedin symbol">
             </a>
         </ul>
     </nav>
-    <!-- <div id="root"></div> -->
     <article>
         <aside>
             <form action="">
                 <input id="game" class="select-form" type="search" list="gameList" name="tournament[name]" placeholder="Choose Game">
                 <br>
-                <input id="state" class="select-form" id="search-state" type="search" list="stateList" name="tournament[location]" placeholder="Choose State">
+                <input id="state" class="select-form" type="search" list="stateList" name="tournament[location]" placeholder="Choose State"> <!-- id="search-state" -->
                 <br>
+                <h5>Filter</h5>
+                <label> Entrants
+                <input type="checkbox" id="most-entrants" class="checkbox-form">
+                </label>
+                <label> Average Entrants
+                <input type="checkbox" id="avg-entrants" class="checkbox-form">
                 <!-- <h3>OR</h3>
                 <input type="text" name="tournament[current-location]" placeholder="Current Address">
                 <br>
                 <input id="radius-number" type="number" name="tournament[radius]" placeholder="Search Mile Radius">
-                <br> -->
+                <br> --> <!-- FUTURE DEV ONCE API IS CONNECTED -->
                 <button id="search-for-tournies-button" type="submit">Search</button>
             </form>
         </aside>
@@ -57,61 +60,17 @@
             <option value="NY">NY</option>
             <option value="NJ"></option>
         </datalist>
-        <!-- <aside class="main-screen">
-            <select id="game-select">
-                <option selected hidden>Select A Game</option>
-            </select>
-            <br>
-            <select id="area-select">
-                <option selected hidden>Select A State/Province</option>
-            </select>
-        </aside> -->
         <div id="tourney-list" class="main-screen">
             <ol id="tournament-listings">
             </ol>
         </div>
     </article>
+
     <footer>
         <button>Average Entrants</button>
         <button>Notable Entrants</button>
         <canvas id="myChart" width="400" height="100">
         </canvas>
     </footer>
-
-    <script>
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Nightclub', 'Brooklyn Bash', 'NYU Fest'],
-            datasets: [{
-                label: '# of Entrants',
-                data: [34, 13, 21],
-                backgroundColor: [
-                    'rgba(255, 99, 132)',
-                    'rgba(54, 162, 235)',
-                    'rgba(255, 206, 86)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-    </script>
-    <!-- <div id="map"></div> -->
 </body>
 </html>
