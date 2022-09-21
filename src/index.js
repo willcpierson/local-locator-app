@@ -122,11 +122,22 @@ document.addEventListener("DOMContentLoaded", () => {
   tourneyList.addEventListener('click', (event) => {
     resetChart(chartValues)
     resetChart(xAxisNames)
-    let findTournament = {
-      game: document.getElementById("game").value
-    };
 
+    let findTournament = {game: document.getElementById("game").value};
     let inputtedGame = findTournament.game;
+    let tournamentAttendeeList = document.querySelector("#all-attendees")
+
+    removeAllChildNodes(tournamentAttendeeList)
+
+    tourneyData.nodes.forEach((tournament) => {
+      let attendees = tournament.events[inputtedGame].attendeeList  
+      attendees.forEach((attendee) => {
+        if (tournament.id === parseInt(event.target.id)) {
+        let attendeeListed = tournamentAttendeeList.appendChild(document.createElement('li'))
+        attendeeListed.innerHTML = `${attendee}`
+        }
+      })
+    })
 
     if (!(xAxisNames[xAxisNames.length - 1] === event.target.innerText)) {
       tourneyData.nodes.forEach((tournament) => {
@@ -147,14 +158,28 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 })
 
+
+
 // Switching Data Representations
+//Switch to Notable Entrants
 document.addEventListener("DOMContentLoaded", (e) => {
   document.querySelector("#entrants-button").onclick = () => {
     const graph = document.querySelector("footer");
     const attendeeList = document.querySelector("#attendee-list")
   
     graph.style.display = "none";
-    attendeeList.style.display = "block"
+    attendeeList.style.display = "flex";
+    console.log("click!")
+  }
+})
+//Switch to Average Entrants
+document.addEventListener("DOMContentLoaded", (e) => {
+  document.querySelector("#avg-entrants-button").onclick = () => {
+    const graph = document.querySelector("footer");
+    const attendeeList = document.querySelector("#attendee-list")
+  
+    graph.style.display = "block";
+    attendeeList.style.display = "none";
     console.log("click!")
   }
 })

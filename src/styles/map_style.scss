@@ -162,30 +162,29 @@ footer {
     border-radius: 10px;
     margin: 10px;
     display: block;
+    position: relative;
 }
 
-#attendee-list {
-    border: 4px solid rgb(49, 49, 49);
-    background-color: white;
-    border-radius: 10px;
-    margin: 10px;
-    display: none;
-    height: 400px;
-}
-
-footer button {
-    border: 2px solid rgb(49, 49, 49);
+.data-buttons {
+    border: 3px solid rgb(49, 49, 49);
     margin: 5px;
     padding: 3px;
     width: auto;
     overflow: visible;
     border-radius: 10px;
-    background: transparent;
+    background: white;
+    position: static;
+    z-index: 200;
+    
 }
 
-footer button:hover {
+.data-buttons:hover {
     cursor: pointer;
     background-color: rgb(199, 199, 199);
+}
+
+#avg-entrants-button {
+    margin-left: 25px;
 }
 
 li {
@@ -204,6 +203,25 @@ li {
 canvas {
     display: flex;
     justify-content: center;
+}
+
+#attendee-list {
+    border: 4px solid rgb(49, 49, 49);
+    background-color: white;
+    border-radius: 10px;
+    margin: 10px;
+    display: none;
+    height: 400px;
+    position: relative;
+    overflow-x:hidden;
+}
+
+#attendee-list li {
+    display: inline-flexbox;
+    border: 3px solid rgb(49, 49, 49);
+    margin: 5px;
+    padding: 2px;
+    border-radius: 5px;
 }
 
 @keyframes transitionIn {
