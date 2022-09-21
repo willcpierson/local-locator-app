@@ -6,20 +6,21 @@ function removeAllChildNodes(parent) {
   };
 };
 
-function sortByEntrantCount(arrayOfTournies) { //game event should already have been checked for existence, same with checkbox checked
+function sortByEntrantCount(arrayOfTournies, inputtedGame) { //game event should already have been checked for existence, same with checkbox checked
   const sortedTournies = []
   const sortThis = []
   arrayOfTournies.forEach((tournament) => {
     sortThis.push(tournament.events[inputtedGame].attendeeList.length)
   })
   const sorted = sortThis.sort()
-  arrayOfTournies.forEach((tournament) => {
-    sorted.forEach((attendeeCount) => {
+  sorted.forEach((attendeeCount) => {
+    arrayOfTournies.forEach((tournament) => {
       if (tournament.events[inputtedGame].attendeeList.length === attendeeCount) {
-        return sortedTournies.push(tournament);
+        sortedTournies.push(tournament);
       }
     })
   })
+  console.log(sortedTournies) // remove when done testing
   return sortedTournies
 } 
 
@@ -42,6 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
     removeAllChildNodes(tournamentList); 
     
     let tournamentListings = tourneyData.nodes
+    if (document.getElementById("most-entrants").checked) {
+      tournamentListings = sortByEntrantCount(tourneyData.nodes, inputtedGame).reverse()
+    } else if (document.getElementById("least-entrants").checked) {
+      tournamentListings = sortByEntrantCount(tourneyData.nodes, inputtedGame)
+    }
 
     tournamentListings.forEach((tournament) => {
       // if entrants === checked, iterate thru and send to sorted by Entrants
@@ -58,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
 })
 
-// Graphs
+// Bar Graph
 function addData(chart, label, data) { // received from chart.js website
   chart.data.labels.push(label);
   chart.data.datasets.forEach((dataset) => {
@@ -141,3 +147,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 })
 
+// Switching Data Representations
+document.addEventListener("DOMContentLoaded", (e) => {
+  document.querySelector("#entrants-button").onclick = () => {
+    const graph = document.querySelector("footer");
+    const attendeeList = document.querySelector("#attendee-list")
+  
+    graph.style.display = "none";
+    attendeeList.style.display = "block"
+    console.log("click!")
+  }
+})

@@ -108,8 +108,19 @@ aside input {
   text-align: center;
 }
 
-.checkbox-form {
+.radio-form {
+  height: 20px;
   width: 20px;
+  margin-top: 0px;
+  padding: 0;
+}
+
+label {
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: start;
 }
 
 aside h3 {
@@ -118,7 +129,9 @@ aside h3 {
 
 aside h5 {
   text-align: center;
-  margin-top: 10px;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
 }
 
 aside button {
@@ -147,6 +160,16 @@ footer {
   background-color: white;
   border-radius: 10px;
   margin: 10px;
+  display: block;
+}
+
+#attendee-list {
+  border: 4px solid rgb(49, 49, 49);
+  background-color: white;
+  border-radius: 10px;
+  margin: 10px;
+  display: none;
+  height: 400px;
 }
 
 footer button {
@@ -175,6 +198,11 @@ li {
   width: 700px;
   display: inline-block;
   overflow-x: hidden;
+}
+
+canvas {
+  display: flex;
+  justify-content: center;
 }
 
 @keyframes transitionIn {
