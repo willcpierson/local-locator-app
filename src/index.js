@@ -1,6 +1,6 @@
 const tourneyData = require('./tournamentdata.json');
 
-const attendeeBackGroundImages = ["https://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/games_15/gamecube_12/SI_GCN_SuperSmashBrosMelee_image1600w.jpg"]
+// const attendeeBackGroundImages = ["https://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/games_15/gamecube_12/SI_GCN_SuperSmashBrosMelee_image1600w.jpg"]
 
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
@@ -273,6 +273,17 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 // Music
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  let musicButton = document.querySelector('#music-button')
+  musicButton.addEventListener('click', (e) => {
+    let song = document.querySelector('#songs')
+    console.log(song)
+    song.play()
+  })
+})
 
 function rollDie() {
   let randomNum = Math.floor(Math.random() * 6);
