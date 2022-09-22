@@ -205,7 +205,6 @@ canvas {
 
 #attendee-list {
   border: 4px solid rgb(49, 49, 49);
-  background-color: #3976bc;
   border-radius: 10px;
   margin: 10px;
   display: none;
@@ -213,6 +212,7 @@ canvas {
   height: 400px;
   position: relative;
   overflow-x: hidden;
+  background-image: url("https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/ncom/en_US/games/switch/s/super-smash-bros-ultimate-switch/hero");
   background-size: cover;
 }
 
