@@ -10,14 +10,19 @@ function sortByEntrantCount(arrayOfTournies, inputtedGame) { //game event should
   const sortedTournies = []
   const sortThis = []
   arrayOfTournies.forEach((tournament) => {
-    sortThis.push(tournament.events[inputtedGame].attendeeList.length)
+    if (tournament.events[inputtedGame]?.attendeeList.length) {
+      console.log(tournament.events[inputtedGame]?.attendeeList.length)
+      sortThis.push(tournament.events[inputtedGame]?.attendeeList.length)
+    }
   })
   const sorted = sortThis.sort()
   sorted.forEach((attendeeCount) => {
     arrayOfTournies.forEach((tournament) => {
+      if (tournament.events[inputtedGame]?.attendeeList.length) {
       if (tournament.events[inputtedGame].attendeeList.length === attendeeCount) {
         sortedTournies.push(tournament);
       }
+    }
     })
   })
   console.log(sortedTournies) // remove when done testing
@@ -41,10 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const tournamentList = document.querySelector("#tournament-listings");
     removeAllChildNodes(tournamentList); 
-    
+      // Worst case for duplicates, just add condition of not to push if tourney name already exists within there (since we are searching by event shouldnt affect different events at same tourney)
     let tournamentListings = tourneyData.nodes
     if (document.getElementById("most-entrants").checked) {
       tournamentListings = sortByEntrantCount(tourneyData.nodes, inputtedGame).reverse()
+      console.log(inputtedGame)
     } else if (document.getElementById("least-entrants").checked) {
       tournamentListings = sortByEntrantCount(tourneyData.nodes, inputtedGame)
     }
@@ -55,9 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
         let attendees = tournament.events[inputtedGame].attendeeList
         let tourney = tournamentList.appendChild(document.createElement('li'))
         tourney.innerHTML = `
-        <a href="https://www.start.gg/${tournament.slug}" target="_blank">${tournament.name} | ${tournament.city}, ${tournament.addrState} | Entrants: ${attendees.length}</a>
+        <a href="https://www.start.gg/${tournament.slug}" target="_blank">${tournament.name} | ${tournament.city}, ${tournament.addrState} <i class="fa-solid fa-user"></i> ${attendees.length}</a>
         `
         tourney.setAttribute('id', tournament.id )
+        tourney.setAttribute('class', "one-of-many")
       }
     }) 
   })
@@ -130,13 +137,18 @@ document.addEventListener("DOMContentLoaded", () => {
     removeAllChildNodes(tournamentAttendeeList)
 
     tourneyData.nodes.forEach((tournament) => {
-      let attendees = tournament.events[inputtedGame].attendeeList  
-      attendees.forEach((attendee) => {
-        if (tournament.id === parseInt(event.target.id)) {
-        let attendeeListed = tournamentAttendeeList.appendChild(document.createElement('li'))
-        attendeeListed.innerHTML = `${attendee}`
-        }
-      })
+      console.log(tournament.events[inputtedGame])
+      console.log("hello")
+      if (tournament.events[inputtedGame]) { // Check game before going forward, otherwise reading undefined error
+        const attendees = tournament.events[inputtedGame].attendeeList
+      
+          attendees.forEach((attendee) => {
+          if (tournament.id === parseInt(event.target.id)) {
+          let attendeeListed = tournamentAttendeeList.appendChild(document.createElement('li'))
+          attendeeListed.innerHTML = `${attendee}`
+          }
+        })
+      }
     })
 
     if (!(xAxisNames[xAxisNames.length - 1] === event.target.innerText)) {
@@ -183,3 +195,45 @@ document.addEventListener("DOMContentLoaded", (e) => {
     console.log("click!")
   }
 })
+
+// Change colors
+document.addEventListener("DOMContentLoaded", () => {
+  let paint = document.querySelector('#paint')
+  paint.addEventListener("click", (e) => {
+    const h1 = document.querySelector('h1');
+    const body = document.querySelector('body')
+    const aside = document.querySelector('aside')
+    const nav = document.querySelector('nav')
+    const listings = document.querySelectorAll(".one-of-many")
+    const listingsHover = document.querySelectorAll(".one-of-many")
+
+      if (paint.value = "standard") {
+        paint.setAttribute("value", "metroid")
+      
+        h1.style.color = "#62dc50"
+        body.style.backgroundColor = "#d14949"
+        aside.style.backgroundColor = "#62dc50"
+        nav.style.backgroundColor = "#d14949"
+        // listings.style.backgroundColor = "#62dc50" // is there a way to change this even if objects havent loaded yet? Through parent?
+        // do hover listings as well once figured out
+      } else { // Not working because it checks at load time?
+        h1.style.color = "white"
+        body.style.backgroundColor = "##5284cf"
+        aside.style.backgroundColor = "##3976bc"
+        nav.style.backgroundColor = "##5284cf"
+        // listings.style.backgroundColor = "#62dc50" // is there a way to change this even if objects havent loaded yet? Through parent?
+        // do hover listings as well once figured out
+      }
+  })
+})
+
+// Music
+
+function rollDie() {
+  
+}
+
+function playMusic() {
+  const songsArray = []
+  
+}

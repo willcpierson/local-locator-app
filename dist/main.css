@@ -19,17 +19,10 @@ nav {
   background-color: #5284cf;
 }
 
-#linkedin {
-  padding-top: 10px;
-  height: 65px;
-  width: 65px;
-}
-
-nav ul li {
-  list-style-type: none;
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #17C3B2;
+#link-icons {
+  background-color: transparent;
+  margin-top: 10px;
+  cursor: pointer;
 }
 
 h1 {
@@ -76,7 +69,6 @@ article {
 }
 
 div {
-  border: 2px groove blueviolet;
   background-color: rgb(49, 49, 49);
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
@@ -164,6 +156,14 @@ footer {
   position: relative;
 }
 
+#button-div {
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  margin-right: 32px;
+}
+
 .data-buttons {
   border: 3px solid rgb(49, 49, 49);
   margin: 5px;
@@ -209,17 +209,27 @@ canvas {
   border-radius: 10px;
   margin: 10px;
   display: none;
+  justify-content: center;
   height: 400px;
   position: relative;
   overflow-x: hidden;
+  background-image: url("https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/ncom/en_US/games/switch/s/super-smash-bros-ultimate-switch/hero");
+  background-size: cover;
 }
 
 #attendee-list li {
-  display: inline-flexbox;
+  display: flex;
+  justify-content: center;
   border: 3px solid rgb(49, 49, 49);
   margin: 5px;
   padding: 2px;
   border-radius: 5px;
+  background-color: white;
+}
+
+#attendee-list li:hover {
+  cursor: pointer;
+  background-color: rgb(199, 199, 199);
 }
 
 @keyframes transitionIn {
