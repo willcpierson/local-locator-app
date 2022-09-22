@@ -1,9 +1,28 @@
 const tourneyData = require('./tournamentdata.json');
 
+const attendeeBackGroundImages = ["https://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/games_15/gamecube_12/SI_GCN_SuperSmashBrosMelee_image1600w.jpg"]
+
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
       parent.removeChild(parent.firstChild);
   };
+};
+
+Array.prototype.quickSort = function (callback) {
+  if (this.length < 2) return this;
+  if (!callback) {
+    callback = (x, y) => {
+      if (x < y) return - 1;
+      return 1;
+    };
+  }
+  const pivot = this[0];
+  let left = this.slice(1).filter((ele) => callback(ele, pivot) === -1);
+  let right = this.slice(1).filter((ele) => callback(ele, pivot) !== -1);
+  left = left.quickSort(callback);
+  right = right.quickSort(callback);
+
+  return left.concat([pivot]).concat(right);
 };
 
 function sortByEntrantCount(arrayOfTournies, inputtedGame) { //game event should already have been checked for existence, same with checkbox checked
@@ -11,26 +30,48 @@ function sortByEntrantCount(arrayOfTournies, inputtedGame) { //game event should
   const sortThis = []
   arrayOfTournies.forEach((tournament) => {
     if (tournament.events[inputtedGame]?.attendeeList.length) {
-      console.log(tournament.events[inputtedGame]?.attendeeList.length)
       sortThis.push(tournament.events[inputtedGame]?.attendeeList.length)
     }
   })
-  const sorted = sortThis.sort()
+  const sorted = sortThis.quickSort()
   sorted.forEach((attendeeCount) => {
     arrayOfTournies.forEach((tournament) => {
       if (tournament.events[inputtedGame]?.attendeeList.length) {
-      if (tournament.events[inputtedGame].attendeeList.length === attendeeCount) {
-        sortedTournies.push(tournament);
+        if (tournament.events[inputtedGame].attendeeList.length === attendeeCount) {
+          if (!sortedTournies.includes(tournament)) sortedTournies.push(tournament);
+        }
       }
-    }
     })
   })
-  console.log(sortedTournies) // remove when done testing
   return sortedTournies
 } 
 
-function sortByAverageEntrantCount(array) {
-
+function sortByAverageEntrantCount(arrayOfTournies, inputtedGame) {
+  const sortedTournies = []
+  const sortThis = []
+  arrayOfTournies.forEach((tournament) => {
+    if (tournament.events[inputtedGame]?.pastAttendeeCount) {
+      let pastTournies = tournament.events[inputtedGame]?.pastAttendeeCount
+      let pastTourneyAverage = Math.floor((pastTournies.pastOne + pastTournies.pastTwo + pastTournies.pastThree) / 3)
+      sortThis.push(pastTourneyAverage)
+    }
+  })
+  const sorted = sortThis.quickSort()
+  sorted.forEach((averageAttendeeCount) => {
+    arrayOfTournies.forEach((tournament) => {
+      if (tournament.events[inputtedGame]?.pastAttendeeCount) {
+        let pastTournies = tournament.events[inputtedGame]?.pastAttendeeCount
+        let pastTourneyAverage = Math.floor((pastTournies.pastOne + pastTournies.pastTwo + pastTournies.pastThree) / 3)
+        if (pastTournies) {
+          if ((pastTourneyAverage) === averageAttendeeCount) {
+            if (!sortedTournies.includes(tournament)) sortedTournies.push(tournament);
+          }
+        }
+      }
+    })
+  })
+  console.log(sortedTournies)
+  return sortedTournies
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -46,26 +87,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const tournamentList = document.querySelector("#tournament-listings");
     removeAllChildNodes(tournamentList); 
-      // Worst case for duplicates, just add condition of not to push if tourney name already exists within there (since we are searching by event shouldnt affect different events at same tourney)
     let tournamentListings = tourneyData.nodes
     if (document.getElementById("most-entrants").checked) {
       tournamentListings = sortByEntrantCount(tourneyData.nodes, inputtedGame).reverse()
-      console.log(inputtedGame)
     } else if (document.getElementById("least-entrants").checked) {
       tournamentListings = sortByEntrantCount(tourneyData.nodes, inputtedGame)
+    } else if (document.getElementById("avg-entrants").checked) {
+      tournamentListings = sortByAverageEntrantCount(tourneyData.nodes, inputtedGame).reverse()
     }
 
+    let promise = Promise.resolve()
+
     tournamentListings.forEach((tournament) => {
-      // if entrants === checked, iterate thru and send to sorted by Entrants
-      if (tournament.events[inputtedGame] && tournament.addrState === inputtedState) {
-        let attendees = tournament.events[inputtedGame].attendeeList
-        let tourney = tournamentList.appendChild(document.createElement('li'))
-        tourney.innerHTML = `
-        <a href="https://www.start.gg/${tournament.slug}" target="_blank">${tournament.name} | ${tournament.city}, ${tournament.addrState} <i class="fa-solid fa-user"></i> ${attendees.length}</a>
-        `
-        tourney.setAttribute('id', tournament.id )
-        tourney.setAttribute('class', "one-of-many")
-      }
+        if (tournament.events[inputtedGame] && tournament.addrState === inputtedState) {
+          promise = promise.then(() => {
+            let attendees = tournament.events[inputtedGame].attendeeList
+            let tourney = tournamentList.appendChild(document.createElement('li'))
+            tourney.innerHTML = `
+            <a href="https://www.start.gg/${tournament.slug}" target="_blank">${tournament.name} | ${tournament.city}, ${tournament.addrState} <i class="fa-solid fa-user"></i> ${attendees.length}</a>
+            `
+            tourney.setAttribute('id', tournament.id )
+            tourney.setAttribute('class', "one-of-many")
+            return new Promise((resolve) => {
+              setTimeout(resolve, 50)
+            })
+          })
+        }
     }) 
   })
   
@@ -76,14 +123,6 @@ function addData(chart, label, data) { // received from chart.js website
   chart.data.labels.push(label);
   chart.data.datasets.forEach((dataset) => {
       dataset.data.push(data);
-  });
-  chart.update();
-}
-
-function removeData(chart) { // Remove later if not necessary // received from chart.js website
-  chart.data.labels.pop();
-  chart.data.datasets.forEach((dataset) => {
-      dataset.data.pop();
   });
   chart.update();
 }
@@ -132,13 +171,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let findTournament = {game: document.getElementById("game").value};
     let inputtedGame = findTournament.game;
+    let attendeeBackGround = document.querySelector("#attendee-list")
     let tournamentAttendeeList = document.querySelector("#all-attendees")
 
+    // document.getElementById('attendee-list').style.backgroundImage = "url(ihttps://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/games_15/gamecube_12/SI_GCN_SuperSmashBrosMelee_image1600w.jpg))"
     removeAllChildNodes(tournamentAttendeeList)
 
     tourneyData.nodes.forEach((tournament) => {
-      console.log(tournament.events[inputtedGame])
-      console.log("hello")
       if (tournament.events[inputtedGame]) { // Check game before going forward, otherwise reading undefined error
         const attendees = tournament.events[inputtedGame].attendeeList
       
@@ -160,7 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
             addData(myChart, "Second Most Recent", [tournament.events[inputtedGame].pastAttendeeCount.pastTwo]);
             addData(myChart, "Most Recent", [tournament.events[inputtedGame].pastAttendeeCount.pastThree]);
             addData(myChart, "Currently Registered", [tournament.events[inputtedGame].attendeeList.length]);
-            console.log(chartValues);
           } else {
             addData(myChart, "Current Entrants", [tournament.events[inputtedGame].attendeeList.length]);
           }
@@ -181,7 +219,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
   
     graph.style.display = "none";
     attendeeList.style.display = "flex";
-    console.log("click!")
   }
 })
 //Switch to Average Entrants
@@ -192,37 +229,45 @@ document.addEventListener("DOMContentLoaded", (e) => {
   
     graph.style.display = "block";
     attendeeList.style.display = "none";
-    console.log("click!")
   }
 })
 
 // Change colors
 document.addEventListener("DOMContentLoaded", () => {
   let paint = document.querySelector('#paint')
+  let paintValue = paint.getAttribute('value')
   paint.addEventListener("click", (e) => {
+
     const h1 = document.querySelector('h1');
     const body = document.querySelector('body')
     const aside = document.querySelector('aside')
     const nav = document.querySelector('nav')
     const listings = document.querySelectorAll(".one-of-many")
     const listingsHover = document.querySelectorAll(".one-of-many")
-
-      if (paint.value = "standard") {
-        paint.setAttribute("value", "metroid")
-      
-        h1.style.color = "#62dc50"
-        body.style.backgroundColor = "#d14949"
-        aside.style.backgroundColor = "#62dc50"
-        nav.style.backgroundColor = "#d14949"
-        // listings.style.backgroundColor = "#62dc50" // is there a way to change this even if objects havent loaded yet? Through parent?
+    if (paintValue === "standard") {     
+      paintValue = "metroid"      
+      h1.style.color = "#62dc50"
+      body.style.backgroundColor = "#d14949"
+      aside.style.backgroundColor = "#4eb13e"
+      nav.style.backgroundColor = "#d14949"
         // do hover listings as well once figured out
-      } else { // Not working because it checks at load time?
+      if (listings) {
+        listings.forEach((tournament) => {
+          tournament.style.backgroundColor = "#62dc50"
+        })
+      }
+    } else { 
+        paintValue = "standard"
         h1.style.color = "white"
-        body.style.backgroundColor = "##5284cf"
-        aside.style.backgroundColor = "##3976bc"
-        nav.style.backgroundColor = "##5284cf"
-        // listings.style.backgroundColor = "#62dc50" // is there a way to change this even if objects havent loaded yet? Through parent?
+        body.style.backgroundColor = "#5284cf"
+        aside.style.backgroundColor = "#3976bc"
+        nav.style.backgroundColor = "#5284cf"
         // do hover listings as well once figured out
+        if (listings) {
+          listings.forEach((tournament) => {
+            tournament.style.backgroundColor = "#71A9F7"
+          })
+        }
       }
   })
 })
@@ -230,10 +275,11 @@ document.addEventListener("DOMContentLoaded", () => {
 // Music
 
 function rollDie() {
-  
+  let randomNum = Math.floor(Math.random() * 6);
+  return randomNum;
 }
 
 function playMusic() {
   const songsArray = []
-  
+
 }

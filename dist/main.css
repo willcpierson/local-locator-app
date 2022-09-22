@@ -101,14 +101,14 @@ aside input {
 }
 
 .radio-form {
-  height: 20px;
+  height: 15px;
   width: 20px;
   margin-top: 0px;
   padding: 0;
 }
 
 label {
-  font-size: 12px;
+  font-size: 14px;
   margin: 0;
   padding: 0;
   display: flex;
