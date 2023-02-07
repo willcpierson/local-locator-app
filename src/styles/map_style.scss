@@ -157,6 +157,21 @@ footer {
     position: relative;
 }
 
+#reg-button {
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-left: 10px;
+    padding: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    z-index: 10;
+}
+
+#reg-button:hover {
+    background-color: black;
+    color: white;
+}
+
 #button-div {
     display: flex;
     justify-content: center;

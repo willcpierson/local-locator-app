@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let attendees = tournament.events[inputtedGame].attendeeList
             let tourney = tournamentList.appendChild(document.createElement('li'))
             tourney.innerHTML = `
-            <a href="https://www.start.gg/${tournament.slug}" target="_blank">${tournament.name} | ${tournament.city}, ${tournament.addrState} <i class="fa-solid fa-user"></i> ${attendees.length}</a>
+            ${tournament.name} | ${tournament.city}, ${tournament.addrState} <i class="fa-solid fa-user"></i> ${attendees.length} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
             `
             tourney.setAttribute('id', tournament.id )
             tourney.setAttribute('class', "one-of-many")
@@ -294,3 +294,6 @@ function playMusic() {
   const songsArray = []
 
 }
+
+
+
