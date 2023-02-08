@@ -2,6 +2,21 @@ const tourneyData = require('./tournamentdata.json');
 
 // const attendeeBackGroundImages = ["https://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/games_15/gamecube_12/SI_GCN_SuperSmashBrosMelee_image1600w.jpg"]
 
+function requestStartApi() {
+  fetch('https://api.start.gg/gql/alpha', {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer a5111b54ba7fb17a3ec32d30ce67ab80'
+    },
+    body: 
+      JSON.stringify({"query":"query TournamentsByCountry($state: String!, $perPage: Int!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      addrState: $state\n    }\n  }) {\n    nodes {\n      id\n      name\n      countryCode\n    }\n  }\n}",
+      "variables":{"state":"CT","perPage":4},
+      "operationName":"TournamentsByCountry"})
+  });
+}
+
+requestStartApi();
+
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
       parent.removeChild(parent.firstChild);
