@@ -9,9 +9,11 @@ function requestStartApi() {
       Authorization: 'Bearer a5111b54ba7fb17a3ec32d30ce67ab80'
     },
     body: 
-      JSON.stringify({"query":"query TournamentsByCountry($state: String!, $perPage: Int!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      addrState: $state\n    }\n  }) {\n    nodes {\n      id\n      name\n      countryCode\n    }\n  }\n}",
-      "variables":{"state":"CT","perPage":4},
-      "operationName":"TournamentsByCountry"})
+      JSON.stringify({
+        "query":"query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      past: false\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      isRegistrationOpen\n      events(filter: {\n        videogameId: 1\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}",
+        "variables":{"perPage":10,"state":"NY","videogameId":1},
+        "operationName":"TournamentsByState"
+      })
   });
 }
 
