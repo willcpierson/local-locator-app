@@ -84,6 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let inputtedGame = findTournament.game;
     let inputtedState = findTournament.state;
+    const tournamentList = document.querySelector("#tournament-listings");
 
     async function requestStartApi(state) {
       let res = await fetch('https://api.start.gg/gql/alpha', {
@@ -93,21 +94,45 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         body: 
           JSON.stringify({
-            "query":"query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      past: false\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      isRegistrationOpen\n      events(filter: {\n        videogameId: 1\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}",
+            "query":"query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      upcoming: true\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      isRegistrationOpen\n      events(filter: {\n        videogameId: 1\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}",
             "variables":{"perPage":10,"state": state,"videogameId":1},
             "operationName":"TournamentsByState"
           })
       })
       let fetchedData = await res.json();
-      return console.log(fetchedData.data.tournaments.nodes); // <--- returns an array of tournaments
+      // return console.log(fetchedData.data.tournaments.nodes); // <--- returns an array of tournaments
+      let tournamentArray = fetchedData.data.tournaments.nodes;
+      if (tournamentArray.length <= 0) {
+        console.log('No tournaments here!')
+      } else {
+
+        // let tourney = tournamentList.appendChild(document.createElement('li'))
+
+        console.log('*** Loading Tournaments... ***')
+        tournamentArray.forEach((tournament) => {
+          let tourney = tournamentList.appendChild(document.createElement('li'))
+          tourney.innerHTML = `
+            ${tournament.name} | ${tournament.events[0].name}: ${tournament.events[0].numEntrants} <i class="fa-solid fa-user"></i> <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
+            `
+          console.log(tournament.name);
+          console.log(tournament.slug);
+          tournament.events.forEach((event) => {
+
+            let attendees = event.numEntrants;
+
+            console.log(event.name);
+            console.log(`Number of Entrants: ${attendees}`);
+          });
+          console.log('---------------------------------------------')
+        });
+      }
+
     }
 
-    let fetchedTournaments = requestStartApi(inputtedState) // replace "NJ" with inputtedGame when ready
-
-    console.log(fetchedTournaments)
+    let fetchedTournaments = requestStartApi(inputtedState); // replace "NJ" with inputtedGame when ready
     
 
-    const tournamentList = document.querySelector("#tournament-listings");
+
     removeAllChildNodes(tournamentList); 
     let tournamentListings = tourneyData.nodes
     if (document.getElementById("most-entrants").checked) {
@@ -120,22 +145,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let promise = Promise.resolve()
 
-    tournamentListings.forEach((tournament) => {
-        if (tournament.events[inputtedGame] && tournament.addrState === inputtedState) {
-          promise = promise.then(() => {
-            let attendees = tournament.events[inputtedGame].attendeeList
-            let tourney = tournamentList.appendChild(document.createElement('li'))
-            tourney.innerHTML = `
-            ${tournament.name} | ${tournament.city}, ${tournament.addrState} <i class="fa-solid fa-user"></i> ${attendees.length} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
-            `
-            tourney.setAttribute('id', tournament.id )
-            tourney.setAttribute('class', "one-of-many")
-            return new Promise((resolve) => {
-              setTimeout(resolve, 50)
-            })
-          })
-        }
-    }) 
+    // tournamentListings.forEach((tournament) => {
+    //     if (tournament.events[inputtedGame] && tournament.addrState === inputtedState) {
+    //       promise = promise.then(() => {
+    //         let attendees = tournament.events[inputtedGame].attendeeList
+    //         let tourney = tournamentList.appendChild(document.createElement('li'))
+    //         tourney.innerHTML = `
+    //         ${tournament.name} | ${tournament.city}, ${tournament.addrState} <i class="fa-solid fa-user"></i> ${attendees.length} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
+    //         `
+    //         tourney.setAttribute('id', tournament.id )
+    //         tourney.setAttribute('class', "one-of-many")
+    //         return new Promise((resolve) => {
+    //           setTimeout(resolve, 50)
+    //         })
+    //       })
+    //     }
+    // }) 
   })
   
 })
