@@ -2,23 +2,6 @@ const tourneyData = require('./tournamentdata.json');
 
 // const attendeeBackGroundImages = ["https://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/games_15/gamecube_12/SI_GCN_SuperSmashBrosMelee_image1600w.jpg"]
 
-function requestStartApi(state) {
-  fetch('https://api.start.gg/gql/alpha', {
-    method: 'POST',
-    headers: {
-      Authorization: 'Bearer a5111b54ba7fb17a3ec32d30ce67ab80'
-    },
-    body: 
-      JSON.stringify({
-        "query":"query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      past: false\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      isRegistrationOpen\n      events(filter: {\n        videogameId: 1\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}",
-        "variables":{"perPage":10,"state": state,"videogameId":1},
-        "operationName":"TournamentsByState"
-      })
-  });
-}
-
-requestStartApi("NJ");
-
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
       parent.removeChild(parent.firstChild);
@@ -42,7 +25,7 @@ Array.prototype.quickSort = function (callback) {
   return left.concat([pivot]).concat(right);
 };
 
-function sortByEntrantCount(arrayOfTournies, inputtedGame) { //game event should already have been checked for existence, same with checkbox checked
+function sortByEntrantCount(arrayOfTournies, inputtedGame) { // arrayOfTournies: data.tournaments.nodes (each node = obj) inputtedGame: state initals string
   const sortedTournies = []
   const sortThis = []
   arrayOfTournies.forEach((tournament) => {
@@ -101,6 +84,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let inputtedGame = findTournament.game;
     let inputtedState = findTournament.state;
+
+    async function requestStartApi(state) {
+      let res = await fetch('https://api.start.gg/gql/alpha', {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer a5111b54ba7fb17a3ec32d30ce67ab80'
+        },
+        body: 
+          JSON.stringify({
+            "query":"query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      past: false\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      isRegistrationOpen\n      events(filter: {\n        videogameId: 1\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}",
+            "variables":{"perPage":10,"state": state,"videogameId":1},
+            "operationName":"TournamentsByState"
+          })
+      })
+      let fetchedData = await res.json();
+      return console.log(fetchedData.data.tournaments.nodes); // <--- returns an array of tournaments
+    }
+
+    let fetchedTournaments = requestStartApi(inputtedState) // replace "NJ" with inputtedGame when ready
+
+    console.log(fetchedTournaments)
+    
 
     const tournamentList = document.querySelector("#tournament-listings");
     removeAllChildNodes(tournamentList); 
@@ -288,29 +293,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   })
 })
-
-// Music
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  let musicButton = document.querySelector('#music-button')
-  musicButton.addEventListener('click', (e) => {
-    let song = document.querySelector('#songs')
-    console.log(song)
-    song.play()
-  })
-})
-
-function rollDie() {
-  let randomNum = Math.floor(Math.random() * 6);
-  return randomNum;
-}
-
-function playMusic() {
-  const songsArray = []
-
-}
 
 
 
