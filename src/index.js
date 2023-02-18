@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         body: 
           JSON.stringify({
-            "query":"query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      upcoming: true\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      isRegistrationOpen\n      events(filter: {\n        videogameId: 1\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}",
+            "query":`query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      upcoming: true\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      isRegistrationOpen\n      events(filter: {\n        videogameId: ${game}\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}`,
             "variables":{"perPage":50,"state": state,"videogameId": game},
             "operationName":"TournamentsByState"
           })
@@ -135,10 +135,14 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log('No tournaments here!')
       } else {
         tournamentArray.forEach((tournament, i) => {
+          let entrantCount = tournament.events[0].numEntrants;
+          if (!tournament.events[0].numEntrants) {
+            entrantCount = `Hidden`
+          }
           setTimeout(() => {
             let tourney = tournamentList.appendChild(document.createElement('li'))
             tourney.innerHTML = `
-              ${tournament.name} | ${tournament.events[0].name}: ${tournament.events[0].numEntrants} <i class="fa-solid fa-user"></i> <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
+              ${tournament.name} | ${tournament.events[0].name}: ${entrantCount} <i class="fa-solid fa-user"></i> <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
               `}, 50 * i);
           })
       }
