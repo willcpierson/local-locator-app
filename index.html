@@ -29,7 +29,9 @@
     <article>
         <aside>
             <form action="">
-                <input id="game" class="select-form" type="search" list="gameList" name="tournament[name]" placeholder="Choose Game">
+                <select id="game" class="select-form" type="search" list="gameList" name="tournament[name]" placeholder="Choose Game">
+                    
+                </select>
                 <br>
                 <input id="state" class="select-form" type="search" list="stateList" name="tournament[location]" placeholder="Choose State"> <!-- id="search-state" -->
                 <br>
@@ -37,13 +39,6 @@
                 <label>
                 <input type="radio" id="most-entrants" name="filter" class="radio-form" value="false" checked>
                 Most Entrants
-                </label>
-                <br>
-                <label>
-                <input type="radio" id="avg-entrants" name="filter" class="radio-form" value="false">
-                Most Average Entrants
-                <br>
-                (Does Not Include Majors)
                 </label>
                 <br>
                 <label>

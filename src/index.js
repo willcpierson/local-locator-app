@@ -74,9 +74,38 @@ function sortByAverageEntrantCount(arrayOfTournies, inputtedGame) {
   return sortedTournies
 }
 
+async function requestGameIds() {
+  let fetchedGameIds;
+  let res = await fetch('https://api.start.gg/gql/alpha', {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer a5111b54ba7fb17a3ec32d30ce67ab80'
+    },
+    body: 
+      JSON.stringify({
+        "query":"query VideogamesQuery {\n  videogames(query: {\n    page: 1\n    perPage: 500\n    filter: {\n      id: null\n    }\n  }) {\n    pageInfo {\n      total\n      totalPages\n      page\n      perPage\n    }\n    nodes {\n      id\n      name\n      displayName\n      images {\n        type\n        width\n        height\n        url\n      }\n    }\n  }\n}",
+        "variables":{"perPage":500},
+        "operationName": "VideogamesQuery"
+      })
+  })
+  fetchedGameIds = await res.json();
+  let games = fetchedGameIds.data.videogames.nodes;
+  games.forEach((gameObject) => {
+    let gameOption = game.appendChild(document.createElement('option'));
+    gameOption.innerHTML = `${gameObject.name}`
+    gameOption.setAttribute('id', `${gameObject.id}`);
+    gameOption.setAttribute('value', `${gameObject.id}`);
+    console.log(gameOption)
+  })
+};
+
+
 document.addEventListener("DOMContentLoaded", () => {
+    // Game ID loading goes here
+    requestGameIds();
   document.getElementById("search-for-tournies-button").addEventListener('click', (event) => {
     event.preventDefault();
+  
     let findTournament = {
       game: document.getElementById("game").value,
       state: document.getElementById("state").value
@@ -84,9 +113,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let inputtedGame = findTournament.game;
     let inputtedState = findTournament.state;
+    console.log(inputtedGame)
     const tournamentList = document.querySelector("#tournament-listings");
 
-    async function requestStartApi(state) {
+    async function requestStartApi(state, game) {
       let res = await fetch('https://api.start.gg/gql/alpha', {
         method: 'POST',
         headers: {
@@ -95,44 +125,29 @@ document.addEventListener("DOMContentLoaded", () => {
         body: 
           JSON.stringify({
             "query":"query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      upcoming: true\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      isRegistrationOpen\n      events(filter: {\n        videogameId: 1\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}",
-            "variables":{"perPage":10,"state": state,"videogameId":1},
+            "variables":{"perPage":50,"state": state,"videogameId": game},
             "operationName":"TournamentsByState"
           })
       })
       let fetchedData = await res.json();
-      // return console.log(fetchedData.data.tournaments.nodes); // <--- returns an array of tournaments
       let tournamentArray = fetchedData.data.tournaments.nodes;
       if (tournamentArray.length <= 0) {
         console.log('No tournaments here!')
       } else {
-
-        // let tourney = tournamentList.appendChild(document.createElement('li'))
-
-        console.log('*** Loading Tournaments... ***')
-        tournamentArray.forEach((tournament) => {
-          let tourney = tournamentList.appendChild(document.createElement('li'))
-          tourney.innerHTML = `
-            ${tournament.name} | ${tournament.events[0].name}: ${tournament.events[0].numEntrants} <i class="fa-solid fa-user"></i> <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
-            `
-          console.log(tournament.name);
-          console.log(tournament.slug);
-          tournament.events.forEach((event) => {
-
-            let attendees = event.numEntrants;
-
-            console.log(event.name);
-            console.log(`Number of Entrants: ${attendees}`);
-          });
-          console.log('---------------------------------------------')
-        });
+        tournamentArray.forEach((tournament, i) => {
+          setTimeout(() => {
+            let tourney = tournamentList.appendChild(document.createElement('li'))
+            tourney.innerHTML = `
+              ${tournament.name} | ${tournament.events[0].name}: ${tournament.events[0].numEntrants} <i class="fa-solid fa-user"></i> <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
+              `}, 50 * i);
+          })
       }
-
+      console.log(fetchedData)
+      return fetchedData;
     }
 
-    let fetchedTournaments = requestStartApi(inputtedState); // replace "NJ" with inputtedGame when ready
+    fetchedTournaments = requestStartApi(inputtedState, inputtedGame); // replace "NJ" with inputtedGame when ready
     
-
-
     removeAllChildNodes(tournamentList); 
     let tournamentListings = tourneyData.nodes
     if (document.getElementById("most-entrants").checked) {
@@ -221,7 +236,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let attendeeBackGround = document.querySelector("#attendee-list")
     let tournamentAttendeeList = document.querySelector("#all-attendees")
 
-    // document.getElementById('attendee-list').style.backgroundImage = "url(ihttps://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/games_15/gamecube_12/SI_GCN_SuperSmashBrosMelee_image1600w.jpg))"
     removeAllChildNodes(tournamentAttendeeList)
 
     tourneyData.nodes.forEach((tournament) => {
@@ -254,8 +268,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 })
-
-
 
 // Switching Data Representations
 //Switch to Notable Entrants
@@ -318,6 +330,3 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   })
 })
-
-
-
