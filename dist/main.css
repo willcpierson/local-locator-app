@@ -147,6 +147,12 @@ aside button:hover {
   cursor: pointer;
 }
 
+#tourney-list-holder {
+  color: white;
+  text-align: center;
+  margin-top: 17%;
+}
+
 footer {
   border: 4px solid rgb(49, 49, 49);
   background-color: white;

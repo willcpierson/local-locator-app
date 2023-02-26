@@ -132,7 +132,11 @@ document.addEventListener("DOMContentLoaded", () => {
       let fetchedData = await res.json();
       let tournamentArray = fetchedData.data.tournaments.nodes;
       if (tournamentArray.length <= 0) {
-        console.log('No tournaments here!')
+        let tourneyListHolder = document.getElementById('tourney-list');
+        tourneyListHolder.innerHTML = `
+        <p id="tourney-list-holder">No Tournaments Located!</p>
+        `
+        console.log('No tournaments here!');
       } else {
         tournamentArray.forEach((tournament, i) => {
           let entrantCount = tournament.events[0].numEntrants;
