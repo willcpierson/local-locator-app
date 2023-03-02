@@ -147,13 +147,13 @@ document.addEventListener("DOMContentLoaded", () => {
             let tourney = tournamentList.appendChild(document.createElement('li'));
             let tournamentEvents = () => {
               let gameEvents = ``;
-              tourney.events.forEach((event) => {
+              tournament.events.forEach((event) => {
                 gameEvents += JSON.stringify(event);
               })
               return gameEvents;
             };
             tournamentEvents();
-            tourney.setAttribute('data-events', tournamentEvents);
+            tourney.setAttribute('data-events', tournamentEvents());
             tourney.innerHTML = `
               ${tournament.name} | ${tournament.events[0].name}: ${entrantCount} <i class="fa-solid fa-user"></i> <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
               `}, 50 * i);
@@ -249,10 +249,12 @@ document.addEventListener("DOMContentLoaded", () => {
     resetChart(chartValues)
     resetChart(xAxisNames)
 
-    let findTournament = {game: document.getElementById("game").value};
-    let inputtedGame = findTournament.game;
-    let attendeeBackGround = document.querySelector("#attendee-list") // Delete when ready
+
+
+    // let findTournament = {game: document.getElementById("game").value};
+    // let inputtedGame = findTournament.game;
     let tournamentAttendeeList = document.querySelector("#all-attendees")
+    console.log(event.target.dataset.events) // all events (each one is an object w/ name, id, and entrant count)
 
     removeAllChildNodes(tournamentAttendeeList)
 
@@ -271,21 +273,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    if (!(xAxisNames[xAxisNames.length - 1] === event.target.innerText)) {
-      tourneyData.nodes.forEach((tournament) => {
-        if (tournament.id === parseInt(event.target.id)) {
-          xAxisName = tournament.name;
-          if (tournament.reoccurence === "weekly" || tournament.reoccurence === "biweekly") {
-            addData(myChart, "Third Most Recent", [tournament.events[inputtedGame].pastAttendeeCount.pastOne]);
-            addData(myChart, "Second Most Recent", [tournament.events[inputtedGame].pastAttendeeCount.pastTwo]);
-            addData(myChart, "Most Recent", [tournament.events[inputtedGame].pastAttendeeCount.pastThree]);
-            addData(myChart, "Currently Registered", [tournament.events[inputtedGame].attendeeList.length]);
-          } else {
-            addData(myChart, "Current Entrants", [tournament.events[inputtedGame].attendeeList.length]);
-          }
-        }
-      })
-    }
+    // if (!(xAxisNames[xAxisNames.length - 1] === event.target.innerText)) {
+    //   tourneyData.nodes.forEach((tournament) => {
+    //     if (tournament.id === parseInt(event.target.id)) {
+    //       xAxisName = tournament.name;
+    //       if (tournament.reoccurence === "weekly" || tournament.reoccurence === "biweekly") {
+    //         addData(myChart, "Third Most Recent", [tournament.events[inputtedGame].pastAttendeeCount.pastOne]);
+    //         addData(myChart, "Second Most Recent", [tournament.events[inputtedGame].pastAttendeeCount.pastTwo]);
+    //         addData(myChart, "Most Recent", [tournament.events[inputtedGame].pastAttendeeCount.pastThree]);
+    //         addData(myChart, "Currently Registered", [tournament.events[inputtedGame].attendeeList.length]);
+    //       } else {
+    //         addData(myChart, "Current Entrants", [tournament.events[inputtedGame].attendeeList.length]);
+    //       }
+    //     }
+    //   })
+    // }
   });
 })
 
