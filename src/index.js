@@ -148,9 +148,9 @@ document.addEventListener("DOMContentLoaded", () => {
             let tournamentEvents = () => {
               let gameEvents = ``;
               tournament.events.forEach((event) => {
-                gameEvents += JSON.stringify(event);
+                gameEvents += JSON.stringify(event) + ', ';
               })
-              return gameEvents;
+              return [gameEvents];
             };
             tournamentEvents();
             tourney.setAttribute('data-events', tournamentEvents());
@@ -254,7 +254,26 @@ document.addEventListener("DOMContentLoaded", () => {
     // let findTournament = {game: document.getElementById("game").value};
     // let inputtedGame = findTournament.game;
     let tournamentAttendeeList = document.querySelector("#all-attendees")
-    console.log(event.target.dataset.events) // all events (each one is an object w/ name, id, and entrant count)
+    // console.log(event.target.dataset)
+    // console.log(typeof event.target.dataset)
+    let events = event.target.dataset.events; 
+    console.log('clicked an event!')
+    // console.log(`---------------`)
+    console.log([5,6,7,])
+    console.log(`${typeof events} below`)
+    console.log(`[${events}]`) // all events (each one is an object w/ name, id, and entrant count)
+          // Error if more than one event, need to find a way to add comma between event objects
+    console.log(JSON.parse(`[${events}]`))
+    let count = 0;
+
+    let eventDetails = () => { JSON.parse(`[${events}]`).forEach((event) => {
+      console.log(`Event Number ${count += 1}`);
+      console.log(event)
+      console.log('-----------------------')
+      }) 
+    }
+  
+    eventDetails();
 
     removeAllChildNodes(tournamentAttendeeList)
 
