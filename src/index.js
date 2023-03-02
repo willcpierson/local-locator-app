@@ -145,9 +145,11 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           setTimeout(() => {
             let tourney = tournamentList.appendChild(document.createElement('li'))
+            tourney.setAttribute('data-events', JSON.stringify(tournament.events))
             tourney.innerHTML = `
               ${tournament.name} | ${tournament.events[0].name}: ${entrantCount} <i class="fa-solid fa-user"></i> <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
               `}, 50 * i);
+
           })
       }
       console.log(fetchedData)
@@ -241,23 +243,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let findTournament = {game: document.getElementById("game").value};
     let inputtedGame = findTournament.game;
-    let attendeeBackGround = document.querySelector("#attendee-list")
+    let attendeeBackGround = document.querySelector("#attendee-list") // Delete when ready
     let tournamentAttendeeList = document.querySelector("#all-attendees")
 
     removeAllChildNodes(tournamentAttendeeList)
 
-    tourneyData.nodes.forEach((tournament) => {
-      if (tournament.events[inputtedGame]) { // Check game before going forward, otherwise reading undefined error
-        const attendees = tournament.events[inputtedGame].attendeeList
+    // tourneyData.nodes.forEach((tournament) => {
+    //   if (tournament.events[inputtedGame]) { // Check game before going forward, otherwise reading undefined error
+    //     const attendees = tournament.events[inputtedGame].attendeeList
       
-          attendees.forEach((attendee) => {
-          if (tournament.id === parseInt(event.target.id)) {
-          let attendeeListed = tournamentAttendeeList.appendChild(document.createElement('li'))
-          attendeeListed.innerHTML = `${attendee}`
-          }
-        })
-      }
-    })
+    //       attendees.forEach((attendee) => {
+    //       if (tournament.id === parseInt(event.target.id)) {
+    //       let attendeeListed = tournamentAttendeeList.appendChild(document.createElement('li'))
+    //       attendeeListed.innerHTML = `${attendee}`
+    //       }
+    //     })
+    //   }
+    // })
+
+
 
     if (!(xAxisNames[xAxisNames.length - 1] === event.target.innerText)) {
       tourneyData.nodes.forEach((tournament) => {
@@ -278,7 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 // Switching Data Representations
-//Switch to Notable Entrants
+//Switch to Notable Entrants // Delete, only need entrant data
 document.addEventListener("DOMContentLoaded", (e) => {
   document.querySelector("#entrants-button").onclick = () => {
     const graph = document.querySelector("footer");
