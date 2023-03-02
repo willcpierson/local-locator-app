@@ -144,8 +144,16 @@ document.addEventListener("DOMContentLoaded", () => {
             entrantCount = `Hidden`
           }
           setTimeout(() => {
-            let tourney = tournamentList.appendChild(document.createElement('li'))
-            tourney.setAttribute('data-events', JSON.stringify(tournament.events))
+            let tourney = tournamentList.appendChild(document.createElement('li'));
+            let tournamentEvents = () => {
+              let gameEvents = ``;
+              tourney.events.forEach((event) => {
+                gameEvents += JSON.stringify(event);
+              })
+              return gameEvents;
+            };
+            tournamentEvents();
+            tourney.setAttribute('data-events', gameEvents)
             tourney.innerHTML = `
               ${tournament.name} | ${tournament.events[0].name}: ${entrantCount} <i class="fa-solid fa-user"></i> <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
               `}, 50 * i);
