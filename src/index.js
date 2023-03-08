@@ -139,9 +139,14 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log('No tournaments here!');
       } else {
         tournamentArray.forEach((tournament, i) => {
-          let entrantCount = tournament.events[0].numEntrants;
+          if (!tournament.events[0]) {
+            return
+          }
+          let entrantCount;
           if (!tournament.events[0].numEntrants) {
             entrantCount = `Hidden`
+          } else {
+            entrantCount = tournament.events[0].numEntrants;
           }
           setTimeout(() => {
             let tourney = tournamentList.appendChild(document.createElement('li'));
@@ -159,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tournamentEvents();
             tourney.setAttribute('data-events', tournamentEvents());
             tourney.innerHTML = `
-              <p>${tournament.name} | ${tournament.events[0].name}: ${entrantCount} <i class="fa-solid fa-user"></i></p> <br /><a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
+              <p class='tournament-text-name'>${tournament.name} | ${tournament.events[0].name}: ${entrantCount} <i class="fa-solid fa-user"></i></p> <br /><a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
               `}, 50 * i);
 
           })
