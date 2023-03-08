@@ -147,15 +147,19 @@ document.addEventListener("DOMContentLoaded", () => {
             let tourney = tournamentList.appendChild(document.createElement('li'));
             let tournamentEvents = () => {
               let gameEvents = ``;
-              tournament.events.forEach((event) => {
-                gameEvents += JSON.stringify(event) + ', ';
+              tournament.events.forEach((event, i) => {
+                if (i < tournament.events.length - 1) {
+                  gameEvents += JSON.stringify(event) + ', ';
+                } else {
+                  gameEvents += JSON.stringify(event);
+                }
               })
-              return [gameEvents];
+              return `[` + gameEvents + `]`;
             };
             tournamentEvents();
             tourney.setAttribute('data-events', tournamentEvents());
             tourney.innerHTML = `
-              ${tournament.name} | ${tournament.events[0].name}: ${entrantCount} <i class="fa-solid fa-user"></i> <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
+              <p>${tournament.name} | ${tournament.events[0].name}: ${entrantCount} <i class="fa-solid fa-user"></i></p> <br /><a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
               `}, 50 * i);
 
           })
@@ -261,12 +265,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // console.log(`---------------`)
     console.log([5,6,7,])
     console.log(`${typeof events} below`)
-    console.log(`[${events}]`) // all events (each one is an object w/ name, id, and entrant count)
+    console.log(events) // all events (each one is an object w/ name, id, and entrant count)
           // Error if more than one event, need to find a way to add comma between event objects
-    console.log(JSON.parse(`[${events}]`))
+
+    console.log(JSON.parse(events))
     let count = 0;
 
-    let eventDetails = () => { JSON.parse(`[${events}]`).forEach((event) => {
+    let eventDetails = () => { JSON.parse(events).forEach((event) => {
       console.log(`Event Number ${count += 1}`);
       console.log(event)
       console.log('-----------------------')
