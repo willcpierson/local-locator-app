@@ -244,6 +244,10 @@ document.addEventListener("DOMContentLoaded", () => {
         scales: {
             y: {
                 beginAtZero: true
+            },
+            x: {
+                suggestedMin: 10,
+                suggestedMax: 50
             }
           }
         }
