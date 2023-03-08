@@ -253,8 +253,6 @@ document.addEventListener("DOMContentLoaded", () => {
     resetChart(chartValues)
     resetChart(xAxisNames)
 
-
-
     // let findTournament = {game: document.getElementById("game").value};
     // let inputtedGame = findTournament.game;
     let tournamentAttendeeList = document.querySelector("#all-attendees")
@@ -272,6 +270,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let count = 0;
 
     let eventDetails = () => { JSON.parse(events).forEach((event) => {
+      // xAxisNames.push(event.name);
+      addData(myChart, `${event.name}`, `${event.numEntrants}`)
       console.log(`Event Number ${count += 1}`);
       console.log(event)
       console.log('-----------------------')
@@ -302,6 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //     if (tournament.id === parseInt(event.target.id)) {
     //       xAxisName = tournament.name;
     //       if (tournament.reoccurence === "weekly" || tournament.reoccurence === "biweekly") {
+    //        ****** NEW CHART ******* addData(myChart, "${event-name} Entrant Count", eventEntrantNumberHere)
     //         addData(myChart, "Third Most Recent", [tournament.events[inputtedGame].pastAttendeeCount.pastOne]);
     //         addData(myChart, "Second Most Recent", [tournament.events[inputtedGame].pastAttendeeCount.pastTwo]);
     //         addData(myChart, "Most Recent", [tournament.events[inputtedGame].pastAttendeeCount.pastThree]);
@@ -313,28 +314,6 @@ document.addEventListener("DOMContentLoaded", () => {
     //   })
     // }
   });
-})
-
-// Switching Data Representations
-//Switch to Notable Entrants // Delete, only need entrant data
-document.addEventListener("DOMContentLoaded", (e) => {
-  document.querySelector("#entrants-button").onclick = () => {
-    const graph = document.querySelector("footer");
-    const attendeeList = document.querySelector("#attendee-list")
-  
-    graph.style.display = "none";
-    attendeeList.style.display = "flex";
-  }
-})
-//Switch to Average Entrants
-document.addEventListener("DOMContentLoaded", (e) => {
-  document.querySelector("#avg-entrants-button").onclick = () => {
-    const graph = document.querySelector("footer");
-    const attendeeList = document.querySelector("#attendee-list")
-  
-    graph.style.display = "block";
-    attendeeList.style.display = "none";
-  }
 })
 
 // Change colors
