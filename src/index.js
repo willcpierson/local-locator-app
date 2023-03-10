@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         body: 
           JSON.stringify({
-            "query":`query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      upcoming: true\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      venueAddress\n      isRegistrationOpen\n      events(filter: {\n        videogameId: 1\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}`,
+            "query":`query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      upcoming: true\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      venueAddress\n      isRegistrationOpen\n      events(filter: {\n        videogameId: ${game}\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}`,
             "variables":{"perPage":50,"state": state,"videogameId": game},
             "operationName":"TournamentsByState"
           })
