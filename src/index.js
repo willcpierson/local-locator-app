@@ -132,13 +132,16 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           setTimeout(() => {
             let tourney = tournamentList.appendChild(document.createElement('li'));
+            let textOfEvents = "";
             let tournamentEvents = () => {
               let gameEvents = ``;
               tournament.events.forEach((event, i) => {
                 if (i < tournament.events.length - 1) {
                   gameEvents += JSON.stringify(event) + ', ';
+                  textOfEvents += `${event.name}: ${event.numEntrants} <i class="fa-solid fa-user"></i> | ` 
                 } else {
                   gameEvents += JSON.stringify(event);
+                  textOfEvents += `${event.name}: ${event.numEntrants} <i class="fa-solid fa-user"></i>` 
                 }
               })
               return `[` + gameEvents + `]`;
@@ -146,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tournamentEvents();
             tourney.setAttribute('data-events', tournamentEvents());
             tourney.innerHTML = `
-              <p class='tournament-text-name'>${tournament.name} </p><br></br> <p>${tournament.events[0].name}: ${entrantCount} <i class="fa-solid fa-user"></i></p> <br /> ${tournament.venueAddress} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
+              <p class='tournament-text-name'>${tournament.name} </p><br></br> <p class='tournament-text-name'> ${textOfEvents} </p> <br /> ${tournament.venueAddress} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
               `}, 50 * i);
 
           })
