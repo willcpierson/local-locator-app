@@ -132,24 +132,33 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           setTimeout(() => {
             let tourney = tournamentList.appendChild(document.createElement('li'));
-            let textOfEvents = "";
             let tournamentEvents = () => {
               let gameEvents = ``;
               tournament.events.forEach((event, i) => {
                 if (i < tournament.events.length - 1) {
                   gameEvents += JSON.stringify(event) + ', ';
-                  textOfEvents += `${event.name}: ${event.numEntrants} <i class="fa-solid fa-user"></i> | ` 
                 } else {
                   gameEvents += JSON.stringify(event);
+                }
+              })
+              return `[` + gameEvents + `]`;
+            };
+            let textOfEvents = "";
+            let tournamentEventsText = () => {
+              let gameEvents = ``;
+              tournament.events.forEach((event, i) => {
+                if (i < tournament.events.length - 1) {
+                  textOfEvents += `${event.name}: ${event.numEntrants} <i class="fa-solid fa-user"></i> | ` 
+                } else {
                   textOfEvents += `${event.name}: ${event.numEntrants} <i class="fa-solid fa-user"></i>` 
                 }
               })
               return `[` + gameEvents + `]`;
             };
-            tournamentEvents();
+            tournamentEventsText();
             tourney.setAttribute('data-events', tournamentEvents());
             tourney.innerHTML = `
-              <p class='tournament-text-name'>${tournament.name} </p><br></br> <p class='tournament-text-name'> ${textOfEvents} </p> <br /> ${tournament.venueAddress} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
+              <h2 class='tournament-text-name'>${tournament.name} </h2><br></br> <p class='tournament-text-name'> ${textOfEvents} </p> <br /> ${tournament.venueAddress} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
               `}, 50 * i);
 
           })
