@@ -155,6 +155,7 @@ aside button:hover {
 
 .tournament-text-name {
   pointer-events: none;
+  display: inline-block;
 }
 
 footer {
@@ -167,11 +168,13 @@ footer {
 }
 
 #reg-button {
+  display: inline-block;
   border: 2px solid black;
   border-radius: 10px;
   padding: 3px;
   padding-left: 5px;
   padding-right: 5px;
+  margin-top: 5px;
   z-index: 10;
 }
 

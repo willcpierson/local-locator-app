@@ -25,53 +25,28 @@ Array.prototype.quickSort = function (callback) {
   return left.concat([pivot]).concat(right);
 };
 
-function sortByEntrantCount(arrayOfTournies, inputtedGame) { // arrayOfTournies: data.tournaments.nodes (each node = obj) inputtedGame: state initals string
+function sortByEntrantCount(arrayOfTournies) { // arrayOfTournies: data.tournaments.nodes (each node = obj) inputtedGame: state initals string
   const sortedTournies = []
   const sortThis = []
-  arrayOfTournies.forEach((tournament) => {
-    if (tournament.events[inputtedGame]?.attendeeList.length) {
-      sortThis.push(tournament.events[inputtedGame]?.attendeeList.length)
-    }
-  })
-  const sorted = sortThis.quickSort()
-  sorted.forEach((attendeeCount) => {
-    arrayOfTournies.forEach((tournament) => {
-      if (tournament.events[inputtedGame]?.attendeeList.length) {
-        if (tournament.events[inputtedGame].attendeeList.length === attendeeCount) {
-          if (!sortedTournies.includes(tournament)) sortedTournies.push(tournament);
-        }
-      }
-    })
-  })
-  return sortedTournies
-} 
 
-function sortByAverageEntrantCount(arrayOfTournies, inputtedGame) {
-  const sortedTournies = []
-  const sortThis = []
-  arrayOfTournies.forEach((tournament) => {
-    if (tournament.events[inputtedGame]?.pastAttendeeCount) {
-      let pastTournies = tournament.events[inputtedGame]?.pastAttendeeCount
-      let pastTourneyAverage = Math.floor((pastTournies.pastOne + pastTournies.pastTwo + pastTournies.pastThree) / 3)
-      sortThis.push(pastTourneyAverage)
-    }
-  })
-  const sorted = sortThis.quickSort()
-  sorted.forEach((averageAttendeeCount) => {
-    arrayOfTournies.forEach((tournament) => {
-      if (tournament.events[inputtedGame]?.pastAttendeeCount) {
-        let pastTournies = tournament.events[inputtedGame]?.pastAttendeeCount
-        let pastTourneyAverage = Math.floor((pastTournies.pastOne + pastTournies.pastTwo + pastTournies.pastThree) / 3)
-        if (pastTournies) {
-          if ((pastTourneyAverage) === averageAttendeeCount) {
-            if (!sortedTournies.includes(tournament)) sortedTournies.push(tournament);
-          }
-        }
-      }
-    })
-  })
-  console.log(sortedTournies)
-  return sortedTournies
+
+
+  // arrayOfTournies.forEach((tournament) => {
+  //   if (tournament.events[inputtedGame]?.attendeeList.length) {
+  //     sortThis.push(tournament.events[inputtedGame]?.attendeeList.length)
+  //   }
+  // })
+  // const sorted = sortThis.quickSort()
+  // sorted.forEach((attendeeCount) => {
+  //   arrayOfTournies.forEach((tournament) => {
+  //     if (tournament.events[inputtedGame]?.attendeeList.length) {
+  //       if (tournament.events[inputtedGame].attendeeList.length === attendeeCount) {
+  //         if (!sortedTournies.includes(tournament)) sortedTournies.push(tournament);
+  //       }
+  //     }
+  //   })
+  // })
+  // return sortedTournies
 }
 
 async function requestGameIds() {
@@ -124,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         body: 
           JSON.stringify({
-            "query":`query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      upcoming: true\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      isRegistrationOpen\n      events(filter: {\n        videogameId: ${game}\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}`,
+            "query":`query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      upcoming: true\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      venueAddress\n      isRegistrationOpen\n      events(filter: {\n        videogameId: 1\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}`,
             "variables":{"perPage":50,"state": state,"videogameId": game},
             "operationName":"TournamentsByState"
           })
@@ -146,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (!tournament.events[0].numEntrants) {
             entrantCount = `Hidden`
           } else {
+
             entrantCount = tournament.events[0].numEntrants;
           }
           setTimeout(() => {
@@ -164,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tournamentEvents();
             tourney.setAttribute('data-events', tournamentEvents());
             tourney.innerHTML = `
-              <p class='tournament-text-name'>${tournament.name} | ${tournament.events[0].name}: ${entrantCount} <i class="fa-solid fa-user"></i></p> <br /><a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
+              <p class='tournament-text-name'>${tournament.name} | ${tournament.events[0].name}: ${entrantCount} ${tournament.venueAddress} <i class="fa-solid fa-user"></i></p> <br /><a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
               `}, 50 * i);
 
           })
@@ -178,11 +154,11 @@ document.addEventListener("DOMContentLoaded", () => {
     removeAllChildNodes(tournamentList); 
     let tournamentListings = tourneyData.nodes
     if (document.getElementById("most-entrants").checked) {
-      tournamentListings = sortByEntrantCount(tourneyData.nodes, inputtedGame).reverse()
+      tournamentListings = sortByEntrantCount(tourneyData.nodes).reverse()
     } else if (document.getElementById("least-entrants").checked) {
-      tournamentListings = sortByEntrantCount(tourneyData.nodes, inputtedGame)
+      tournamentListings = sortByEntrantCount(tourneyData.nodes)
     } else if (document.getElementById("avg-entrants").checked) {
-      tournamentListings = sortByAverageEntrantCount(tourneyData.nodes, inputtedGame).reverse()
+      tournamentListings = sortByAverageEntrantCount(tourneyData.nodes).reverse()
     }
 
     let promise = Promise.resolve()
