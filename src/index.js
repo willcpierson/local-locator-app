@@ -66,11 +66,15 @@ async function requestGameIds() {
   fetchedGameIds = await res.json();
   let games = fetchedGameIds.data.videogames.nodes;
   games.forEach((gameObject) => {
-    let gameOption = game.appendChild(document.createElement('option'));
+    const gameMenu = document.querySelector("#gameList")
+    let gameOption = gameMenu.appendChild(document.createElement('option'));
     gameOption.innerHTML = `${gameObject.name}`
-    gameOption.setAttribute('id', `${gameObject.id}`);
-    gameOption.setAttribute('value', `${gameObject.id}`);
+    gameOption.setAttribute('id', gameObject.id);
+    gameOption.setAttribute('value', gameObject.id);
+    gameOption.setAttribute('data-gameid', gameObject.id)
+    console.log(gameObject)
     console.log(gameOption)
+    console.log(gameOption.dataset.gameid)
   })
 };
 
@@ -86,9 +90,10 @@ document.addEventListener("DOMContentLoaded", () => {
       state: document.getElementById("state").value
     };
 
+    console.log(findTournament);
     let inputtedGame = findTournament.game;
     let inputtedState = findTournament.state;
-    console.log(inputtedGame)
+    console.log(inputtedGame);
     const tournamentList = document.querySelector("#tournament-listings");
 
     async function requestStartApi(state, game) {
@@ -105,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
           })
       })
       let fetchedData = await res.json();
+      console.log(fetchedData)
       let tournamentArray = fetchedData.data.tournaments.nodes;
       if (tournamentArray.length <= 0) {
         let tourneyListHolder = document.getElementById('tourney-list');
@@ -140,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tournamentEvents();
             tourney.setAttribute('data-events', tournamentEvents());
             tourney.innerHTML = `
-              <p class='tournament-text-name'>${tournament.name} | ${tournament.events[0].name}: ${entrantCount} ${tournament.venueAddress} <i class="fa-solid fa-user"></i></p> <br /><a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
+              <p class='tournament-text-name'>${tournament.name} </p><br></br> <p>${tournament.events[0].name}: ${entrantCount} <i class="fa-solid fa-user"></i></p> <br /> ${tournament.venueAddress} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
               `}, 50 * i);
 
           })
@@ -152,14 +158,14 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchedTournaments = requestStartApi(inputtedState, inputtedGame); // replace "NJ" with inputtedGame when ready
     
     removeAllChildNodes(tournamentList); 
-    let tournamentListings = tourneyData.nodes
-    if (document.getElementById("most-entrants").checked) {
-      tournamentListings = sortByEntrantCount(tourneyData.nodes).reverse()
-    } else if (document.getElementById("least-entrants").checked) {
-      tournamentListings = sortByEntrantCount(tourneyData.nodes)
-    } else if (document.getElementById("avg-entrants").checked) {
-      tournamentListings = sortByAverageEntrantCount(tourneyData.nodes).reverse()
-    }
+    // let tournamentListings = tourneyData.nodes
+    // if (document.getElementById("most-entrants").checked) {
+    //   tournamentListings = sortByEntrantCount(tourneyData.nodes).reverse()
+    // } else if (document.getElementById("least-entrants").checked) {
+    //   tournamentListings = sortByEntrantCount(tourneyData.nodes)
+    // } else if (document.getElementById("avg-entrants").checked) {
+    //   tournamentListings = sortByAverageEntrantCount(tourneyData.nodes).reverse()
+    // }
 
     let promise = Promise.resolve()
 
