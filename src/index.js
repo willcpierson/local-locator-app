@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         body: 
           JSON.stringify({
-            "query":`query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      upcoming: true\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      venueAddress\n      isRegistrationOpen\n      events(filter: {\n        videogameId: ${game}\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}`,
+            "query":`query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      upcoming: true\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      venueAddress\n      isRegistrationOpen\n      startAt\n      events(filter: {\n        videogameId: ${game}\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}`,
             "variables":{"perPage":50,"state": state,"videogameId": game},
             "operationName":"TournamentsByState"
           })
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tournamentEventsText();
             tourney.setAttribute('data-events', tournamentEvents());
             tourney.innerHTML = `
-              <h2 class='tournament-text-name'>${tournament.name} </h2><br></br> <p class='tournament-text-name'> ${textOfEvents} </p> <br /> ${tournament.venueAddress} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
+              <h2 class='tournament-text-name'>${tournament.name} </h2> <p>${new Date(tournament.startAt)}</p><p class='tournament-text-name'> ${textOfEvents} </p> <br /> ${tournament.venueAddress} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
               `}, 50 * i);
 
           })
