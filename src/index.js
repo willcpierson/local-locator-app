@@ -59,7 +59,7 @@ async function requestGameIds() {
     body: 
       JSON.stringify({
         "query":"query VideogamesQuery {\n  videogames(query: {\n    page: 1\n    perPage: 500\n    filter: {\n      id: null\n    }\n  }) {\n    pageInfo {\n      total\n      totalPages\n      page\n      perPage\n    }\n    nodes {\n      id\n      name\n      displayName\n      images {\n        type\n        width\n        height\n        url\n      }\n    }\n  }\n}",
-        "variables":{"perPage":500},
+        "variables":{"perPage": 500},
         "operationName": "VideogamesQuery"
       })
   })
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tournamentEventsText();
             tourney.setAttribute('data-events', tournamentEvents());
             tourney.innerHTML = `
-              <h2 class='tournament-text-name'>${tournament.name} </h2> <p>${new Date(tournament.startAt)}</p><p class='tournament-text-name'> ${textOfEvents} </p> <br /> ${tournament.venueAddress} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
+              <h2 class='tournament-text-name'>${tournament.name} </h2> <p>${new Date(tournament.startAt * 1000)}</p><p class='tournament-text-name'> ${textOfEvents} </p> <br /> ${tournament.venueAddress} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
               `}, 50 * i);
 
           })
