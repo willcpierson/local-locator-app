@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
               let gameEvents = ``;
               tournament.events.forEach((event, i) => {
                 let numberOfEntrants;
-                if (event.numEntrants === null) {
+                if (event.numEntrants == null) {
                   numberOfEntrants = 'Hidden'
                 } else {
                   numberOfEntrants = event.numEntrants
