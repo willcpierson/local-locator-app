@@ -155,6 +155,8 @@ document.addEventListener("DOMContentLoaded", () => {
               })
               return `[` + gameEvents + `]`;
             };
+
+            let tourneyDate = new Date(tournament.startAt * 1000)
             tournamentEventsText();
             tourney.setAttribute('data-events', tournamentEvents());
             tourney.innerHTML = `
@@ -317,44 +319,4 @@ document.addEventListener("DOMContentLoaded", () => {
     //   })
     // }
   });
-})
-
-// Change colors
-document.addEventListener("DOMContentLoaded", () => {
-  let paint = document.querySelector('#paint')
-  let paintValue = paint.getAttribute('value')
-  paint.addEventListener("click", (e) => {
-
-    const h1 = document.querySelector('h1');
-    const body = document.querySelector('body')
-    const aside = document.querySelector('aside')
-    const nav = document.querySelector('nav')
-    const listings = document.querySelectorAll(".one-of-many")
-    const listingsHover = document.querySelectorAll(".one-of-many")
-    if (paintValue === "standard") {     
-      paintValue = "metroid"      
-      h1.style.color = "#62dc50"
-      body.style.backgroundColor = "#d14949"
-      aside.style.backgroundColor = "#4eb13e"
-      nav.style.backgroundColor = "#d14949"
-        // do hover listings as well once figured out
-      if (listings) {
-        listings.forEach((tournament) => {
-          tournament.style.backgroundColor = "#62dc50"
-        })
-      }
-    } else { 
-        paintValue = "standard"
-        h1.style.color = "white"
-        body.style.backgroundColor = "#5284cf"
-        aside.style.backgroundColor = "#3976bc"
-        nav.style.backgroundColor = "#5284cf"
-        // do hover listings as well once figured out
-        if (listings) {
-          listings.forEach((tournament) => {
-            tournament.style.backgroundColor = "#71A9F7"
-          })
-        }
-      }
-  })
 })
