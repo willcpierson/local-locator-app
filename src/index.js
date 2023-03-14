@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
         body: 
           JSON.stringify({
             "query":`query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      upcoming: true\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      venueAddress\n      isRegistrationOpen\n      startAt\n      events(filter: {\n        videogameId: ${game}\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}`,
-            "variables":{"perPage":50,"state": state,"videogameId": game},
+            "variables":{"perPage":50,"state": state.toUpperCase(),"videogameId": game},
             "operationName":"TournamentsByState"
           })
       })
@@ -258,24 +258,16 @@ document.addEventListener("DOMContentLoaded", () => {
     resetChart(chartValues)
     resetChart(xAxisNames)
 
-    // let findTournament = {game: document.getElementById("game").value};
-    // let inputtedGame = findTournament.game;
     let tournamentAttendeeList = document.querySelector("#all-attendees")
-    // console.log(event.target.dataset)
-    // console.log(typeof event.target.dataset)
     let events = event.target.dataset.events; 
     console.log('clicked an event!')
-    // console.log(`---------------`)
-    console.log([5,6,7,])
     console.log(`${typeof events} below`)
     console.log(events) // all events (each one is an object w/ name, id, and entrant count)
-          // Error if more than one event, need to find a way to add comma between event objects
 
     console.log(JSON.parse(events))
     let count = 0;
 
     let eventDetails = () => { JSON.parse(events).forEach((event) => {
-      // xAxisNames.push(event.name);
       addData(myChart, `${event.name}`, `${event.numEntrants}`)
       console.log(`Event Number ${count += 1}`);
       console.log(event)
@@ -300,8 +292,6 @@ document.addEventListener("DOMContentLoaded", () => {
     //   }
     // })
 
-
-
     // if (!(xAxisNames[xAxisNames.length - 1] === event.target.innerText)) {
     //   tourneyData.nodes.forEach((tournament) => {
     //     if (tournament.id === parseInt(event.target.id)) {
@@ -319,4 +309,4 @@ document.addEventListener("DOMContentLoaded", () => {
     //   })
     // }
   });
-})
+});
