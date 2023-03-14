@@ -156,7 +156,6 @@ document.addEventListener("DOMContentLoaded", () => {
               return `[` + gameEvents + `]`;
             };
 
-            let tourneyDate = new Date(tournament.startAt * 1000)
             tournamentEventsText();
             tourney.setAttribute('data-events', tournamentEvents());
             tourney.innerHTML = `
