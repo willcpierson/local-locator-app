@@ -147,10 +147,16 @@ document.addEventListener("DOMContentLoaded", () => {
             let tournamentEventsText = () => {
               let gameEvents = ``;
               tournament.events.forEach((event, i) => {
-                if (i < tournament.events.length - 1) {
-                  textOfEvents += `${event.name}: ${event.numEntrants} <i class="fa-solid fa-user"></i> | ` 
+                let numberOfEntrants;
+                if (event.numEntrants === null) {
+                  numberOfEntrants = 'Hidden'
                 } else {
-                  textOfEvents += `${event.name}: ${event.numEntrants} <i class="fa-solid fa-user"></i>` 
+                  numberOfEntrants = event.numEntrants
+                }
+                if (i < tournament.events.length - 1) {
+                  textOfEvents += `${event.name}: ${numberOfEntrants} <i class="fa-solid fa-user"></i> | ` 
+                } else {
+                  textOfEvents += `${event.name}: ${numberOfEntrants} <i class="fa-solid fa-user"></i>` 
                 }
               })
               return `[` + gameEvents + `]`;
