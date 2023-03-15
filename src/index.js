@@ -51,31 +51,40 @@ function sortByEntrantCount(arrayOfTournies) { // arrayOfTournies: data.tourname
 
 async function requestGameIds() {
   let fetchedGameIds;
-  let res = await fetch('https://api.start.gg/gql/alpha', {
-    method: 'POST',
-    headers: {
-      Authorization: 'Bearer a5111b54ba7fb17a3ec32d30ce67ab80'
-    },
-    body: 
-      JSON.stringify({
-        "query":"query VideogamesQuery {\n  videogames(query: {\n    page: 1\n    perPage: 500\n    filter: {\n      id: null\n    }\n  }) {\n    pageInfo {\n      total\n      totalPages\n      page\n      perPage\n    }\n    nodes {\n      id\n      name\n      displayName\n      images {\n        type\n        width\n        height\n        url\n      }\n    }\n  }\n}",
-        "variables":{"perPage": 500},
-        "operationName": "VideogamesQuery"
-      })
-  })
-  fetchedGameIds = await res.json();
-  let games = fetchedGameIds.data.videogames.nodes;
-  games.forEach((gameObject) => {
-    const gameMenu = document.querySelector("#gameList")
-    let gameOption = gameMenu.appendChild(document.createElement('option'));
-    gameOption.innerHTML = `${gameObject.name}`
-    gameOption.setAttribute('id', gameObject.id);
-    gameOption.setAttribute('value', gameObject.id);
-    gameOption.setAttribute('data-gameid', gameObject.id)
-    console.log(gameObject)
-    console.log(gameOption)
-    console.log(gameOption.dataset.gameid)
-  })
+  try {
+    let res = await fetch('https://api.start.gg/gql/alpha', {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer a5111b54ba7fb17a3ec32d30ce67ab80'
+      },
+      body: 
+        JSON.stringify({
+          "query":"query VideogamesQuery {\n  videogames(query: {\n    page: 1\n    perPage: 500\n    filter: {\n      id: null\n    }\n  }) {\n    pageInfo {\n      total\n      totalPages\n      page\n      perPage\n    }\n    nodes {\n      id\n      name\n      displayName\n      images {\n        type\n        width\n        height\n        url\n      }\n    }\n  }\n}",
+          "variables":{"perPage": 500},
+          "operationName": "VideogamesQuery"
+        })
+    })
+
+    if (!res.ok) {
+      throw new Error('Start.gg token is currently being overworked, try again in a few minutes!')
+    }
+  
+    fetchedGameIds = await res.json();
+    let games = fetchedGameIds.data.videogames.nodes;
+    games.forEach((gameObject) => {
+      const gameMenu = document.querySelector("#gameList")
+      let gameOption = gameMenu.appendChild(document.createElement('option'));
+      gameOption.innerHTML = `${gameObject.name}`
+      gameOption.setAttribute('id', gameObject.id);
+      gameOption.setAttribute('value', gameObject.id);
+      gameOption.setAttribute('data-gameid', gameObject.id)
+      console.log(gameObject)
+      console.log(gameOption)
+      console.log(gameOption.dataset.gameid)
+    })
+  } catch (error) {
+    console.error('There was a problem receiving the game IDs, try again later', error)
+  }
 };
 
 
@@ -97,81 +106,96 @@ document.addEventListener("DOMContentLoaded", () => {
     const tournamentList = document.querySelector("#tournament-listings");
 
     async function requestStartApi(state, game) {
-      let res = await fetch('https://api.start.gg/gql/alpha', {
-        method: 'POST',
-        headers: {
-          Authorization: 'Bearer a5111b54ba7fb17a3ec32d30ce67ab80'
-        },
-        body: 
-          JSON.stringify({
-            "query":`query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      upcoming: true\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      venueAddress\n      isRegistrationOpen\n      startAt\n      events(filter: {\n        videogameId: ${game}\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}`,
-            "variables":{"perPage":50,"state": state.toUpperCase(),"videogameId": game},
-            "operationName":"TournamentsByState"
-          })
-      })
-      let fetchedData = await res.json();
-      console.log(fetchedData)
-      let tournamentArray = fetchedData.data.tournaments.nodes;
-      if (tournamentArray.length <= 0) {
-        let tourneyListHolder = document.getElementById('tourney-list');
-        tourneyListHolder.innerHTML = `
-        <p id="tourney-list-holder">No Tournaments Located!</p>
-        `
-        console.log('No tournaments here!');
-      } else {
-        tournamentArray.forEach((tournament, i) => {
-          if (!tournament.events[0]) {
-            return
-          }
-          let entrantCount;
-          if (!tournament.events[0].numEntrants) {
-            entrantCount = `Hidden`
-          } else {
 
-            entrantCount = tournament.events[0].numEntrants;
-          }
-          setTimeout(() => {
-            let tourney = tournamentList.appendChild(document.createElement('li'));
-            let tournamentEvents = () => {
-              let gameEvents = ``;
-              tournament.events.forEach((event, i) => {
-                if (i < tournament.events.length - 1) {
-                  gameEvents += JSON.stringify(event) + ', ';
-                } else {
-                  gameEvents += JSON.stringify(event);
-                }
-              })
-              return `[` + gameEvents + `]`;
-            };
-            let textOfEvents = "";
-            let tournamentEventsText = () => {
-              let gameEvents = ``;
-              tournament.events.forEach((event, i) => {
-                let numberOfEntrants;
-                if (event.numEntrants == null) {
-                  numberOfEntrants = 'Hidden'
-                } else {
-                  numberOfEntrants = event.numEntrants
-                }
-                if (i < tournament.events.length - 1) {
-                  textOfEvents += `${event.name}: ${numberOfEntrants} <i class="fa-solid fa-user"></i> | ` 
-                } else {
-                  textOfEvents += `${event.name}: ${numberOfEntrants} <i class="fa-solid fa-user"></i>` 
-                }
-              })
-              return `[` + gameEvents + `]`;
-            };
+      try {      
+        let res = await fetch('https://api.start.gg/gql/alpha', {
+          method: 'POST',
+          headers: {
+            Authorization: 'Bearer a5111b54ba7fb17a3ec32d30ce67ab80'
+          },
+          body: 
+            JSON.stringify({
+              "query":`query TournamentsByState($perPage: Int, $state: String!, $videogameId: ID!) {\n  tournaments(query: {\n    perPage: $perPage\n    filter: {\n      upcoming: true\n      addrState: $state\n      videogameIds: [\n        $videogameId\n      ]\n    }\n  }) {\n    nodes {\n      name\n      addrState\n      slug\n      venueAddress\n      isRegistrationOpen\n      startAt\n      events(filter: {\n        videogameId: ${game}\n      }) {\n        id\n        name\n        numEntrants\n      }\n    }\n  }\n}`,
+              "variables":{"perPage":50,"state": state.toUpperCase(),"videogameId": game},
+              "operationName":"TournamentsByState"
+            })
+        })
 
-            tournamentEventsText();
-            tourney.setAttribute('data-events', tournamentEvents());
-            tourney.innerHTML = `
-              <h2 class='tournament-text-name'>${tournament.name} </h2> <p>${new Date(tournament.startAt * 1000)}</p><p class='tournament-text-name'> ${textOfEvents} </p> <br /> ${tournament.venueAddress} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
-              `}, 50 * i);
+        if (!res.ok) {
+          throw new Error('Local Locator is experiencing some high traffic, please try again later!')
+        }
+        let fetchedData = await res.json();
+        console.log(fetchedData)
+        let tournamentArray = fetchedData.data.tournaments.nodes;
+        if (tournamentArray.length <= 0) {
+          let tourneyListHolder = document.getElementById('tourney-list');
+          tourneyListHolder.innerHTML = `
+          <p id="tourney-list-holder">No Tournaments Located!</p>
+          `
+          console.log('No tournaments here!');
+        } else {
+          tournamentArray.forEach((tournament, i) => {
+            if (!tournament.events[0]) {
+              return
+            }
+            let entrantCount;
+            if (!tournament.events[0].numEntrants) {
+              entrantCount = `Hidden`
+            } else {
 
-          })
+              entrantCount = tournament.events[0].numEntrants;
+            }
+            setTimeout(() => {
+              let tourney = tournamentList.appendChild(document.createElement('li'));
+              let tournamentEvents = () => {
+                let gameEvents = ``;
+                tournament.events.forEach((event, i) => {
+                  if (i < tournament.events.length - 1) {
+                    gameEvents += JSON.stringify(event) + ', ';
+                  } else {
+                    gameEvents += JSON.stringify(event);
+                  }
+                })
+                return `[` + gameEvents + `]`;
+              };
+              let textOfEvents = "";
+              let tournamentEventsText = () => {
+                let gameEvents = ``;
+                tournament.events.forEach((event, i) => {
+                  let numberOfEntrants;
+                  if (event.numEntrants == null) {
+                    numberOfEntrants = 'Hidden'
+                  } else {
+                    numberOfEntrants = event.numEntrants
+                  }
+                  if (i < tournament.events.length - 1) {
+                    textOfEvents += `${event.name}: ${numberOfEntrants} <i class="fa-solid fa-user"></i> | ` 
+                  } else {
+                    textOfEvents += `${event.name}: ${numberOfEntrants} <i class="fa-solid fa-user"></i>` 
+                  }
+                })
+                return `[` + gameEvents + `]`;
+              };
+
+              const tourneyDate = new Date(tournament.startAt * 1000);
+              const day = tourneyDate.getDate();
+              const month = tourneyDate.getMonth();
+              const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+              const year = tourneyDate.getFullYear();
+
+              tournamentEventsText();
+              tourney.setAttribute('data-events', tournamentEvents());
+              tourney.innerHTML = `
+                <h2 class='tournament-text-name'>${tournament.name} </h2> <p>${monthNames[month]} ${day}, ${year}</p><p class='tournament-text-name'> ${textOfEvents} </p> <br /> ${tournament.venueAddress} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
+                `}, 50 * i);
+
+            })
+        }
+        console.log(fetchedData)
+        return fetchedData;
+      } catch (error) {
+        console.error('There was a problem with the fetch request', error)
       }
-      console.log(fetchedData)
-      return fetchedData;
     }
 
     fetchedTournaments = requestStartApi(inputtedState, inputtedGame); // replace "NJ" with inputtedGame when ready
