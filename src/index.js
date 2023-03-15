@@ -198,7 +198,23 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    fetchedTournaments = requestStartApi(inputtedState, inputtedGame); // replace "NJ" with inputtedGame when ready
+    function validateForm() {
+      const gameInput = document.getElementById('game');
+      const stateInput = document.getElementById('state');
+      const gameDataList = document.getElementById('gameList');
+      const stateDataList = document.getElementById('stateList');
+      const stateOptions = Array.from(stateDataList.options).map(option => option.value);
+      const gameOptions = Array.from(gameDataList.options).map(option => option.value)
+      if (!stateOptions.includes(stateInput.value)) {
+        alert("Please select a valid state")
+      } else if (!gameOptions.includes(gameInput.value)) {
+        alert("Please select a valid game")
+      } else {
+        fetchedTournaments = requestStartApi(inputtedState, inputtedGame);
+      }
+    }
+
+    validateForm();
     
     removeAllChildNodes(tournamentList); 
     // let tournamentListings = tourneyData.nodes
