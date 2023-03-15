@@ -4,9 +4,9 @@ const tourneyData = require('./tournamentdata.json');
 
 function removeAllChildNodes(parent) {
   if (parent) {
-    const noTournamentsLocated = document.getElementById('tourney-list-holder');
+    const noTournamentsLocated = document.getElementsByClassName('tourney-list-holder');
     if (noTournamentsLocated) {
-      noTournamentsLocated.parentNode.removeChild(noTournamentsLocated)
+      noTournamentsLocated.innerHTML = ``
     }
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
           let tourneyListHolder = document.getElementById('tourney-list');
           tourneyListHolder.innerHTML = `
           <ol id="tournament-listings">
-          </ol><p id="tourney-list-holder">No Tournaments Located!</p>
+          </ol><p class="tourney-list-holder">No Tournaments Located!</p>
           `
           console.log('No tournaments here!');
         } else {
@@ -192,18 +192,14 @@ document.addEventListener("DOMContentLoaded", () => {
         let tourneyListHolder = document.getElementById('tourney-list');
         tourneyListHolder.innerHTML = `
         <ol id="tournament-listings">
-        </ol><p id="tourney-list-holder">Please input a valid state.</p>
+        </ol><p class="tourney-list-holder">Please input a valid state.</p>
         `
-        alert('Please input a valid state.')
-        console.log('Invalid state!');
       } else if (!gameOptions.includes(gameInput.value)) {
         let tourneyListHolder = document.getElementById('tourney-list');
         tourneyListHolder.innerHTML = `
         <ol id="tournament-listings">
-        </ol><p id="tourney-list-holder">Please input a valid game.</p>
+        </ol><p class="tourney-list-holder">Please input a valid game.</p>
         `
-        alert('Please input a valid game.')
-        console.log('Invalid game!');
       } else {
         fetchedTournaments = requestStartApi(inputtedState, inputtedGame);
       }
