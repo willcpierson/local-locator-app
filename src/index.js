@@ -3,9 +3,15 @@ const tourneyData = require('./tournamentdata.json');
 // const attendeeBackGroundImages = ["https://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/games_15/gamecube_12/SI_GCN_SuperSmashBrosMelee_image1600w.jpg"]
 
 function removeAllChildNodes(parent) {
-  while (parent.firstChild) {
-      parent.removeChild(parent.firstChild);
-  };
+  if (parent) {
+    const noTournamentsLocated = document.getElementById('tourney-list-holder');
+    if (noTournamentsLocated) {
+      noTournamentsLocated.parentNode.removeChild(noTournamentsLocated)
+    }
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    };
+  }
 };
 
 Array.prototype.quickSort = function (callback) {
@@ -24,30 +30,6 @@ Array.prototype.quickSort = function (callback) {
 
   return left.concat([pivot]).concat(right);
 };
-
-function sortByEntrantCount(arrayOfTournies) { // arrayOfTournies: data.tournaments.nodes (each node = obj) inputtedGame: state initals string
-  const sortedTournies = []
-  const sortThis = []
-
-
-
-  // arrayOfTournies.forEach((tournament) => {
-  //   if (tournament.events[inputtedGame]?.attendeeList.length) {
-  //     sortThis.push(tournament.events[inputtedGame]?.attendeeList.length)
-  //   }
-  // })
-  // const sorted = sortThis.quickSort()
-  // sorted.forEach((attendeeCount) => {
-  //   arrayOfTournies.forEach((tournament) => {
-  //     if (tournament.events[inputtedGame]?.attendeeList.length) {
-  //       if (tournament.events[inputtedGame].attendeeList.length === attendeeCount) {
-  //         if (!sortedTournies.includes(tournament)) sortedTournies.push(tournament);
-  //       }
-  //     }
-  //   })
-  // })
-  // return sortedTournies
-}
 
 async function requestGameIds() {
   let fetchedGameIds;
@@ -130,7 +112,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (tournamentArray.length <= 0) {
           let tourneyListHolder = document.getElementById('tourney-list');
           tourneyListHolder.innerHTML = `
-          <p id="tourney-list-holder">No Tournaments Located!</p>
+          <ol id="tournament-listings">
+          </ol><p id="tourney-list-holder">No Tournaments Located!</p>
           `
           console.log('No tournaments here!');
         } else {
@@ -206,9 +189,21 @@ document.addEventListener("DOMContentLoaded", () => {
       const stateOptions = Array.from(stateDataList.options).map(option => option.value);
       const gameOptions = Array.from(gameDataList.options).map(option => option.value)
       if (!stateOptions.includes(stateInput.value)) {
-        alert("Please select a valid state")
+        let tourneyListHolder = document.getElementById('tourney-list');
+        tourneyListHolder.innerHTML = `
+        <ol id="tournament-listings">
+        </ol><p id="tourney-list-holder">Please input a valid state.</p>
+        `
+        alert('Please input a valid state.')
+        console.log('Invalid state!');
       } else if (!gameOptions.includes(gameInput.value)) {
-        alert("Please select a valid game")
+        let tourneyListHolder = document.getElementById('tourney-list');
+        tourneyListHolder.innerHTML = `
+        <ol id="tournament-listings">
+        </ol><p id="tourney-list-holder">Please input a valid game.</p>
+        `
+        alert('Please input a valid game.')
+        console.log('Invalid game!');
       } else {
         fetchedTournaments = requestStartApi(inputtedState, inputtedGame);
       }
