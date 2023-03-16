@@ -1,7 +1,3 @@
-const tourneyData = require('./tournamentdata.json');
-
-// const attendeeBackGroundImages = ["https://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/games_15/gamecube_12/SI_GCN_SuperSmashBrosMelee_image1600w.jpg"]
-
 function removeAllChildNodes(parent) {
   if (parent) {
     const noTournamentsLocated = document.getElementsByClassName('tourney-list-holder');
@@ -57,7 +53,7 @@ async function requestGameIds() {
       const gameMenu = document.querySelector("#gameList")
       let gameOption = gameMenu.appendChild(document.createElement('option'));
       gameOption.innerHTML = `${gameObject.name}`
-      gameOption.setAttribute('id', gameObject.id);
+      gameOption.setAttribute('id', gameObject.name);
       gameOption.setAttribute('value', gameObject.id);
       gameOption.setAttribute('data-gameid', gameObject.id)
       console.log(gameObject)
@@ -71,26 +67,24 @@ async function requestGameIds() {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Game ID loading goes here
-    requestGameIds();
+  requestGameIds();
   document.getElementById("search-for-tournies-button").addEventListener('click', (event) => {
     event.preventDefault();
   
-    let findTournament = {
+    const findTournament = {
       game: document.getElementById("game").value,
       state: document.getElementById("state").value
     };
 
-    console.log(findTournament);
-    let inputtedGame = findTournament.game;
-    let inputtedState = findTournament.state;
-    console.log(inputtedGame);
+    const inputtedGame = findTournament.game;
+    const inputtedState = findTournament.state;
+
     const tournamentList = document.querySelector("#tournament-listings");
 
     async function requestStartApi(state, game) {
 
       try {      
-        let res = await fetch('https://api.start.gg/gql/alpha', {
+        const res = await fetch('https://api.start.gg/gql/alpha', {
           method: 'POST',
           headers: {
             Authorization: 'Bearer a5111b54ba7fb17a3ec32d30ce67ab80'
@@ -106,16 +100,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!res.ok) {
           throw new Error('Local Locator is experiencing some high traffic, please try again later!')
         }
-        let fetchedData = await res.json();
-        console.log(fetchedData)
-        let tournamentArray = fetchedData.data.tournaments.nodes;
+        const fetchedData = await res.json();
+        const tournamentArray = fetchedData.data.tournaments.nodes;
         if (tournamentArray.length <= 0) {
-          let tourneyListHolder = document.getElementById('tourney-list');
+          const tourneyListHolder = document.getElementById('tourney-list');
           tourneyListHolder.innerHTML = `
           <ol id="tournament-listings">
           </ol><p class="tourney-list-holder">No Tournaments Located!</p>
           `
-          console.log('No tournaments here!');
         } else {
           tournamentArray.forEach((tournament, i) => {
             if (!tournament.events[0]) {
@@ -125,12 +117,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!tournament.events[0].numEntrants) {
               entrantCount = `Hidden`
             } else {
-
               entrantCount = tournament.events[0].numEntrants;
             }
             setTimeout(() => {
-              let tourney = tournamentList.appendChild(document.createElement('li'));
-              let tournamentEvents = () => {
+              const tourney = tournamentList.appendChild(document.createElement('li'));
+              const tournamentEvents = () => {
                 let gameEvents = ``;
                 tournament.events.forEach((event, i) => {
                   if (i < tournament.events.length - 1) {
@@ -142,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return `[` + gameEvents + `]`;
               };
               let textOfEvents = "";
-              let tournamentEventsText = () => {
+              const tournamentEventsText = () => {
                 let gameEvents = ``;
                 tournament.events.forEach((event, i) => {
                   let numberOfEntrants;
@@ -174,7 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             })
         }
-        console.log(fetchedData)
         return fetchedData;
       } catch (error) {
         console.error('There was a problem with the fetch request', error)
@@ -189,13 +179,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const stateOptions = Array.from(stateDataList.options).map(option => option.value);
       const gameOptions = Array.from(gameDataList.options).map(option => option.value)
       if (!stateOptions.includes(stateInput.value)) {
-        let tourneyListHolder = document.getElementById('tourney-list');
+        const tourneyListHolder = document.getElementById('tourney-list');
         tourneyListHolder.innerHTML = `
         <ol id="tournament-listings">
         </ol><p class="tourney-list-holder">Please input a valid state.</p>
         `
       } else if (!gameOptions.includes(gameInput.value)) {
-        let tourneyListHolder = document.getElementById('tourney-list');
+        const tourneyListHolder = document.getElementById('tourney-list');
         tourneyListHolder.innerHTML = `
         <ol id="tournament-listings">
         </ol><p class="tourney-list-holder">Please input a valid game.</p>
@@ -204,40 +194,11 @@ document.addEventListener("DOMContentLoaded", () => {
         fetchedTournaments = requestStartApi(inputtedState, inputtedGame);
       }
     }
-
     validateForm();
-    
     removeAllChildNodes(tournamentList); 
-    // let tournamentListings = tourneyData.nodes
-    // if (document.getElementById("most-entrants").checked) {
-    //   tournamentListings = sortByEntrantCount(tourneyData.nodes).reverse()
-    // } else if (document.getElementById("least-entrants").checked) {
-    //   tournamentListings = sortByEntrantCount(tourneyData.nodes)
-    // } else if (document.getElementById("avg-entrants").checked) {
-    //   tournamentListings = sortByAverageEntrantCount(tourneyData.nodes).reverse()
-    // }
-
-    let promise = Promise.resolve()
-
-    // tournamentListings.forEach((tournament) => {
-    //     if (tournament.events[inputtedGame] && tournament.addrState === inputtedState) {
-    //       promise = promise.then(() => {
-    //         let attendees = tournament.events[inputtedGame].attendeeList
-    //         let tourney = tournamentList.appendChild(document.createElement('li'))
-    //         tourney.innerHTML = `
-    //         ${tournament.name} | ${tournament.city}, ${tournament.addrState} <i class="fa-solid fa-user"></i> ${attendees.length} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
-    //         `
-    //         tourney.setAttribute('id', tournament.id )
-    //         tourney.setAttribute('class', "one-of-many")
-    //         return new Promise((resolve) => {
-    //           setTimeout(resolve, 50)
-    //         })
-    //       })
-    //     }
-    // }) 
-  })
-  
-})
+    // let promise = Promise.resolve();
+  });
+});
 
 // Bar Graph
 function addData(chart, label, data) { // received from chart.js website
@@ -256,8 +217,8 @@ function resetChart(chartValueArray) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const ctx = document.getElementById('myChart').getContext('2d');
-  let xAxisNames = [];
-  let chartValues = [];
+  const xAxisNames = [];
+  const chartValues = [];
   const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -293,56 +254,13 @@ document.addEventListener("DOMContentLoaded", () => {
   tourneyList.addEventListener('click', (event) => {
     resetChart(chartValues)
     resetChart(xAxisNames)
-
-    let tournamentAttendeeList = document.querySelector("#all-attendees")
-    let events = event.target.dataset.events; 
-    console.log('clicked an event!')
-    console.log(`${typeof events} below`)
-    console.log(events) // all events (each one is an object w/ name, id, and entrant count)
-
-    console.log(JSON.parse(events))
-    let count = 0;
-
-    let eventDetails = () => { JSON.parse(events).forEach((event) => {
+    const tournamentAttendeeList = document.querySelector("#all-attendees")
+    const events = event.target.dataset.events; 
+    const eventDetails = () => { JSON.parse(events).forEach((event) => {
       addData(myChart, `${event.name}`, `${event.numEntrants}`)
-      console.log(`Event Number ${count += 1}`);
-      console.log(event)
-      console.log('-----------------------')
       }) 
     }
-  
     eventDetails();
-
     removeAllChildNodes(tournamentAttendeeList)
-
-    // tourneyData.nodes.forEach((tournament) => {
-    //   if (tournament.events[inputtedGame]) { // Check game before going forward, otherwise reading undefined error
-    //     const attendees = tournament.events[inputtedGame].attendeeList
-      
-    //       attendees.forEach((attendee) => {
-    //       if (tournament.id === parseInt(event.target.id)) {
-    //       let attendeeListed = tournamentAttendeeList.appendChild(document.createElement('li'))
-    //       attendeeListed.innerHTML = `${attendee}`
-    //       }
-    //     })
-    //   }
-    // })
-
-    // if (!(xAxisNames[xAxisNames.length - 1] === event.target.innerText)) {
-    //   tourneyData.nodes.forEach((tournament) => {
-    //     if (tournament.id === parseInt(event.target.id)) {
-    //       xAxisName = tournament.name;
-    //       if (tournament.reoccurence === "weekly" || tournament.reoccurence === "biweekly") {
-    //        ****** NEW CHART ******* addData(myChart, "${event-name} Entrant Count", eventEntrantNumberHere)
-    //         addData(myChart, "Third Most Recent", [tournament.events[inputtedGame].pastAttendeeCount.pastOne]);
-    //         addData(myChart, "Second Most Recent", [tournament.events[inputtedGame].pastAttendeeCount.pastTwo]);
-    //         addData(myChart, "Most Recent", [tournament.events[inputtedGame].pastAttendeeCount.pastThree]);
-    //         addData(myChart, "Currently Registered", [tournament.events[inputtedGame].attendeeList.length]);
-    //       } else {
-    //         addData(myChart, "Current Entrants", [tournament.events[inputtedGame].attendeeList.length]);
-    //       }
-    //     }
-    //   })
-    // }
   });
 });
