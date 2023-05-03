@@ -24,6 +24,14 @@ function removeAllChildNodes(parent) {
         noTournamentsLocated.dataset.remove = "";
       }
     }
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) {
+      if (loadingScreen.dataset.remove === "visible") {
+        loadingScreen.remove();
+      } else {
+        loadingScreen.dataset.remove = "";
+      }
+    }
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     };
@@ -46,6 +54,22 @@ Array.prototype.quickSort = function (callback) {
 
   return left.concat([pivot]).concat(right);
 };
+
+const numPeriods = 3;
+const intervalTime = 500;
+
+function showLoadingMessage() {
+  let count = 0;
+  const tourneyListHolder = document.getElementById('tourney-list');
+  return setInterval(() => {
+    count++;
+    const periods = ".".repeat(count % (numPeriods + 1));
+    tourneyListHolder.innerHTML = `
+      <ol id="tournament-listings">
+      </ol><p class="tourney-list-holder" id="loadingScreen" data-remove="visible">Loading${periods}</p>
+    `
+  }, intervalTime);
+}
 
 async function requestGameIds() {
   let fetchedGameIds;
@@ -73,35 +97,66 @@ async function requestGameIds() {
       const gameMenu = document.querySelector("#gameList")
       let gameOption = gameMenu.appendChild(document.createElement('option'));
       gameOption.innerHTML = `${gameObject.name}`
-      gameOption.setAttribute('id', gameObject.name);
-      gameOption.setAttribute('value', gameObject.id);
-      gameOption.setAttribute('data-gameid', gameObject.id)
+      gameOption.setAttribute('id', gameObject.id);
+      gameOption.setAttribute('value', gameObject.name);
+      gameOption.setAttribute('data-gameid', gameObject.name);
       console.log(gameObject)
       console.log(gameOption)
       console.log(gameOption.dataset.gameid)
-    })
+    });
+    return games;
   } catch (error) {
     console.error('There was a problem receiving the game IDs, try again later', error)
   }
 };
 
+function findGameId(gameName, allGames) {
+  console.log(allGames);
+  const games = Object.keys(allGames);
+    games.forEach((name) => {
+    console.log(`does ${name} = ${gameName}?`);
+    if (name === gameName) {
+      return 1;
+    }
+  });
+  return 1;
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   requestGameIds();
+
+  const gameObject = requestGameIds();
+
+  const inputGame = document.getElementById('game')
+  console.log(inputGame)
+  // inputGame.addEventListener(change, () => {
+    
+  //   const selectedOption = document.querySelector(`#gameList option[value="${inputGame.value}"]`)
+  //   console.log(selectedOption)
+  //   console.log('CHANGED!')
+  //   if (selectedOption) {
+  //     inputGame.dataset.gameid = selectedOption.id;
+  //   }
+  // })
+
   document.getElementById("search-for-tournies-button").addEventListener('click', (event) => {
     event.preventDefault();
   
     const findTournament = {
-      game: document.getElementById("game").value,
+      game: findGameId(document.getElementById("game").value, gameObject),
       state: document.getElementById("state").value
     };
 
     const inputtedGame = findTournament.game;
     const inputtedState = findTournament.state;
 
+    console.log(findTournament)
+
     const tournamentList = document.querySelector("#tournament-listings");
 
     async function requestStartApi(state, game) {
+      // const loadingInterval = showLoadingMessage();
+      // await new Promise(resolve => setTimeout(resolve, 5000));
 
       try {      
         const res = await fetch('https://api.start.gg/gql/alpha', {
@@ -117,6 +172,12 @@ document.addEventListener("DOMContentLoaded", () => {
             })
         })
 
+        // clearInterval(loadingInterval);
+        // console.log('Interval Passed');
+        // const loadingScreen = document.getElementById('loadingScreen');
+        // loadingScreen.remove();
+        
+
         if (!res.ok) {
           throw new Error('Local Locator is experiencing some high traffic, please try again later!')
         }
@@ -129,6 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </ol><p class="tourney-list-holder" id="noTournaments" data-remove="visible">No Tournaments Located!</p>
           `
         } else {
+          console.log('displaying tournaments...')
           tournamentArray.forEach((tournament, i) => {
             if (!tournament.events[0]) {
               return
@@ -180,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
               tournamentEventsText();
               tourney.setAttribute('data-events', tournamentEvents());
               tourney.innerHTML = `
-                <h2 class='tournament-text-name'>${tournament.name} </h2> <p>${monthNames[month]} ${day}, ${year}</p><p class='tournament-text-name'> ${textOfEvents} </p> <br /> ${tournament.venueAddress} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
+                <h2 class='tournament-text-name'>${tournament.name} </h2> <p class='tournament-date'>${monthNames[month]} ${day}, ${year}</p><p class='tournament-text-name'> ${textOfEvents} </p> <br /> ${tournament.venueAddress} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
                 `}, 50 * i);
 
             })
