@@ -110,22 +110,8 @@ async function requestGameIds() {
   }
 };
 
-function findGameId(gameName, allGames) {
-  console.log(allGames);
-  const games = Object.keys(allGames);
-    games.forEach((name) => {
-    console.log(`does ${name} = ${gameName}?`);
-    if (name === gameName) {
-      return 1;
-    }
-  });
-  return 1;
-};
-
 document.addEventListener("DOMContentLoaded", () => {
   requestGameIds();
-
-  const gameObject = requestGameIds();
 
   const inputGame = document.getElementById('game')
   console.log(inputGame)
@@ -141,9 +127,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("search-for-tournies-button").addEventListener('click', (event) => {
     event.preventDefault();
+
+    const allGames = document.querySelectorAll("option");
+    console.log(allGames);
+
+    function findGameId(options) {
+      const gameName = document.getElementById("game").value;
+      let foundId = null;
+      options.forEach((option) => {
+        if (option.outerText === gameName) {
+          console.log(`found ID: ${option.id}`);
+          foundId = parseInt(option.id);
+        }
+      });
+      return foundId;
+    };
   
+    findGameId(allGames);
+
     const findTournament = {
-      game: findGameId(document.getElementById("game").value, gameObject),
+      game: findGameId(allGames),
       state: document.getElementById("state").value
     };
 
