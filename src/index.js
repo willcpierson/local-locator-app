@@ -6,36 +6,36 @@ function removeAllChildNodes(parent) {
         invalidStateWarning.dataset.remove = "";
       } else {
         invalidStateWarning.remove();
-      }
-    }
+      };
+    };
     const invalidGameWarning = document.getElementById('invalidGame');
     if (invalidGameWarning) {
       if (invalidGameWarning.dataset.remove === "visible") {
         invalidGameWarning.dataset.remove = "";
       } else {
         invalidGameWarning.remove();
-      }
-    }
+      };
+    };
     const noTournamentsLocated = document.getElementById('noTournaments');
     if (noTournamentsLocated) {
       if (noTournamentsLocated.dataset.remove === "visible") {
         noTournamentsLocated.remove();
       } else {
         noTournamentsLocated.dataset.remove = "";
-      }
-    }
+      };
+    };
     const loadingScreen = document.getElementById('loadingScreen');
     if (loadingScreen) {
       if (loadingScreen.dataset.remove === "visible") {
         loadingScreen.remove();
       } else {
         loadingScreen.dataset.remove = "";
-      }
-    }
+      };
+    };
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     };
-  }
+  };
 };
 
 Array.prototype.quickSort = function (callback) {
@@ -45,13 +45,12 @@ Array.prototype.quickSort = function (callback) {
       if (x < y) return - 1;
       return 1;
     };
-  }
+  };
   const pivot = this[0];
   let left = this.slice(1).filter((ele) => callback(ele, pivot) === -1);
   let right = this.slice(1).filter((ele) => callback(ele, pivot) !== -1);
   left = left.quickSort(callback);
   right = right.quickSort(callback);
-
   return left.concat([pivot]).concat(right);
 };
 
@@ -69,7 +68,7 @@ function showLoadingMessage() {
       </ol><p class="tourney-list-holder" id="loadingScreen" data-remove="visible">Loading${periods}</p>
     `
   }, intervalTime);
-}
+};
 
 async function requestGameIds() {
   let fetchedGameIds;
@@ -85,11 +84,11 @@ async function requestGameIds() {
           "variables":{"perPage": 500},
           "operationName": "VideogamesQuery"
         })
-    })
+    });
 
     if (!res.ok) {
       throw new Error('Start.gg token is currently being overworked, try again in a few minutes!')
-    }
+    };
   
     fetchedGameIds = await res.json();
     let games = fetchedGameIds.data.videogames.nodes;
@@ -107,29 +106,16 @@ async function requestGameIds() {
     return games;
   } catch (error) {
     console.error('There was a problem receiving the game IDs, try again later', error)
-  }
+  };
 };
 
 document.addEventListener("DOMContentLoaded", () => {
   requestGameIds();
 
-  const inputGame = document.getElementById('game')
-  console.log(inputGame)
-  // inputGame.addEventListener(change, () => {
-    
-  //   const selectedOption = document.querySelector(`#gameList option[value="${inputGame.value}"]`)
-  //   console.log(selectedOption)
-  //   console.log('CHANGED!')
-  //   if (selectedOption) {
-  //     inputGame.dataset.gameid = selectedOption.id;
-  //   }
-  // })
-
   document.getElementById("search-for-tournies-button").addEventListener('click', (event) => {
     event.preventDefault();
 
     const allGames = document.querySelectorAll("option");
-    console.log(allGames);
 
     function findGameId(options) {
       const gameName = document.getElementById("game").value;
@@ -142,8 +128,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       return foundId;
     };
-  
-    findGameId(allGames);
 
     const findTournament = {
       game: findGameId(allGames),
@@ -152,15 +136,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const inputtedGame = findTournament.game;
     const inputtedState = findTournament.state;
-
-    console.log(findTournament)
-
     const tournamentList = document.querySelector("#tournament-listings");
 
     async function requestStartApi(state, game) {
-      // const loadingInterval = showLoadingMessage();
-      // await new Promise(resolve => setTimeout(resolve, 5000));
-
       try {      
         const res = await fetch('https://api.start.gg/gql/alpha', {
           method: 'POST',
@@ -173,17 +151,10 @@ document.addEventListener("DOMContentLoaded", () => {
               "variables":{"perPage":50,"state": state.toUpperCase(),"videogameId": game},
               "operationName":"TournamentsByState"
             })
-        })
-
-        // clearInterval(loadingInterval);
-        // console.log('Interval Passed');
-        // const loadingScreen = document.getElementById('loadingScreen');
-        // loadingScreen.remove();
-        
-
+        });
         if (!res.ok) {
           throw new Error('Local Locator is experiencing some high traffic, please try again later!')
-        }
+        };
         const fetchedData = await res.json();
         const tournamentArray = fetchedData.data.tournaments.nodes;
         if (tournamentArray.length <= 0) {
@@ -197,13 +168,13 @@ document.addEventListener("DOMContentLoaded", () => {
           tournamentArray.forEach((tournament, i) => {
             if (!tournament.events[0]) {
               return
-            }
+            };
             let entrantCount;
             if (!tournament.events[0].numEntrants) {
               entrantCount = `Hidden`
             } else {
               entrantCount = tournament.events[0].numEntrants;
-            }
+            };
             setTimeout(() => {
               const tourney = tournamentList.appendChild(document.createElement('li'));
               const tournamentEvents = () => {
@@ -231,30 +202,27 @@ document.addEventListener("DOMContentLoaded", () => {
                     textOfEvents += `${event.name}: ${numberOfEntrants} <i class="fa-solid fa-user"></i> | ` 
                   } else {
                     textOfEvents += `${event.name}: ${numberOfEntrants} <i class="fa-solid fa-user"></i>` 
-                  }
-                })
+                  };
+                });
                 return `[` + gameEvents + `]`;
               };
-
               const tourneyDate = new Date(tournament.startAt * 1000);
               const day = tourneyDate.getDate();
               const month = tourneyDate.getMonth();
               const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
               const year = tourneyDate.getFullYear();
-
               tournamentEventsText();
               tourney.setAttribute('data-events', tournamentEvents());
               tourney.innerHTML = `
                 <h2 class='tournament-text-name'>${tournament.name} </h2> <p class='tournament-date'>${monthNames[month]} ${day}, ${year}</p><p class='tournament-text-name'> ${textOfEvents} </p> <br /> ${tournament.venueAddress} <a href="https://www.start.gg/${tournament.slug}" target="_blank" id='reg-button'>Register</a>
                 `}, 50 * i);
-
-            })
-        }
+            });
+        };
         return fetchedData;
       } catch (error) {
         console.error('There was a problem with the fetch request', error)
-      }
-    }
+      };
+    };
 
     function validateForm() {
       const gameInput = document.getElementById('game');
@@ -277,8 +245,8 @@ document.addEventListener("DOMContentLoaded", () => {
         `
       } else {
         fetchedTournaments = requestStartApi(inputtedState, inputtedGame);
-      }
-    }
+      };
+    };
     validateForm();
     removeAllChildNodes(tournamentList); 
   });
@@ -291,13 +259,13 @@ function addData(chart, label, data) { // received from chart.js website
       dataset.data.push(data);
   });
   chart.update();
-}
+};
 
 function resetChart(chartValueArray) {
   while (chartValueArray.length > 0) {
     chartValueArray.pop()
-  }
-}
+  };
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   const ctx = document.getElementById('myChart').getContext('2d');
@@ -336,14 +304,14 @@ document.addEventListener("DOMContentLoaded", () => {
       })
   const tourneyList = document.querySelector("ol");
   tourneyList.addEventListener('click', (event) => {
-    resetChart(chartValues)
-    resetChart(xAxisNames)
+    resetChart(chartValues);
+    resetChart(xAxisNames);
     const tournamentAttendeeList = document.querySelector("#all-attendees")
     const events = event.target.dataset.events; 
     const eventDetails = () => { JSON.parse(events).forEach((event) => {
       addData(myChart, `${event.name}`, `${event.numEntrants}`)
-      }) 
-    }
+      }) ;
+    };
     eventDetails();
     removeAllChildNodes(tournamentAttendeeList)
   });
