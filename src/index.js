@@ -65,7 +65,7 @@ function showLoadingMessage() {
     const periods = ".".repeat(count % (numPeriods + 1));
     tourneyListHolder.innerHTML = `
       <ol id="tournament-listings">
-      </ol><p class="tourney-list-holder" id="loadingScreen" data-remove="visible">Loading${periods}</p>
+      </ol><p class="tourney-list-holder" id="loadingScreen" data-remove="visible">Loading Tournaments${periods}</p>
     `
   }, intervalTime);
 };
