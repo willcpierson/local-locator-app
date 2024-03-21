@@ -76,7 +76,7 @@ async function requestGameIds() {
     let res = await fetch('https://api.start.gg/gql/alpha', {
       method: 'POST',
       headers: {
-        Authorization: 'Bearer a5111b54ba7fb17a3ec32d30ce67ab80'
+        Authorization: 'Bearer 274a66af4c20d9fe5ad88d00a549f9d9'
       },
       body: 
         JSON.stringify({
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const res = await fetch('https://api.start.gg/gql/alpha', {
           method: 'POST',
           headers: {
-            Authorization: 'Bearer a5111b54ba7fb17a3ec32d30ce67ab80'
+            Authorization: 'Bearer 274a66af4c20d9fe5ad88d00a549f9d9'
           },
           body: 
             JSON.stringify({
