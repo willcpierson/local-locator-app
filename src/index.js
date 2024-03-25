@@ -85,7 +85,7 @@ async function requestGameIds() {
           "operationName": "VideogamesQuery"
         })
     });
-
+    console.log("0e1b83503891e2f1bc8fee7ddc914d69 being used")
     if (!res.ok) {
       throw new Error('Start.gg token is currently being overworked, try again in a few minutes!')
     };
